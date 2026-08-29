@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 490-Year Prophecy — Historicism and empiric data as evidence that Jesus is God</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Frank+Ruhl+Libre:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --midnight: #131b2a;
+  --midnight-2: #1c2a40;
+  --midnight-edge: #4a6485;
+  --vellum: #efe6cf;
+  --vellum-soft: #f7f2e4;
+  --vellum-deep: #ddcfa4;
+  --ink: #2a2013;
+  --ink-soft: #5b503c;
+  --gold: #7a4a16;
+  --gold-bright: #c99a4a;
+  --seal: #6b2626;
+  --serif-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --serif-body: 'Source Serif 4', Georgia, Cambria, 'Times New Roman', serif;
+  --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --hebrew: 'Frank Ruhl Libre', 'Times New Roman', serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+body {
+  margin: 0;
+  background: var(--vellum);
+  color: var(--ink);
+  font-family: var(--serif-body);
+  font-size: 1.09rem;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: var(--gold); }
+::selection { background: var(--gold-bright); color: var(--midnight); }
+html, body { overflow-x: clip; }
+
+/* ---------- SMOOTH INITIAL LOAD ---------- */
+/* Body stays invisible for a beat until fonts are ready (or a short
+   timeout elapses), then fades in — this avoids a flash of fallback-font
+   text swapping to the web font mid-render. See the early script in
+   <head> that adds .is-ready. Guarded by a noscript fallback below. */
+body {
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+html.is-ready body { opacity: 1; }
+
+.eyebrow, .hero h1, .hero-sub, .timeline-track {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s cubic-bezier(.19,1,.22,1), transform .8s cubic-bezier(.19,1,.22,1);
+}
+html.is-ready .eyebrow      { opacity: 1; transform: translateY(0); transition-delay: .05s; }
+html.is-ready .hero h1      { opacity: 1; transform: translateY(0); transition-delay: .16s; }
+html.is-ready .hero-sub     { opacity: 1; transform: translateY(0); transition-delay: .3s; }
+html.is-ready .timeline-track { opacity: 1; transform: translateY(0); transition-delay: .44s; }
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 900px 500px at 18% -10%, var(--midnight-2), transparent 60%),
+    var(--midnight);
+  color: #fff;
+  padding: 4.75rem 1.5rem 3.5rem;
+  text-align: center;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1px 1px at 28% 68%, rgba(255,255,255,.4), transparent 60%),
+    radial-gradient(1.5px 1.5px at 46% 15%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1px 1px at 62% 55%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(1px 1px at 78% 30%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,.4), transparent 60%),
+    radial-gradient(1px 1px at 8% 80%, rgba(255,255,255,.3), transparent 60%),
+    radial-gradient(1px 1px at 95% 12%, rgba(255,255,255,.4), transparent 60%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin: 0 0 1.4rem;
+}
+.hero h1 {
+  font-family: var(--serif-display);
+  font-weight: 600;
+  font-size: clamp(2.3rem, 6.4vw, 4.1rem);
+  line-height: 1.06;
+  letter-spacing: -.01em;
+  margin: 0 0 1.1rem;
+}
+.hero-sub {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+  color: #ddd0b2;
+  max-width: 48ch;
+  margin: 0 auto 3.4rem;
+  line-height: 1.55;
+}
+.timeline-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: auto auto auto auto; /* flag / year / dot / label */
+  column-gap: .15rem;
+  row-gap: .4rem;
+  align-items: center;
+  justify-items: center;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: .2rem .2rem 0;
+}
+/* the connecting line lives in the same grid row as the dots, so it
+   always meets them at the same vertical position, at any text size */
+.timeline-track::before {
+  content: '';
+  grid-column: 1 / -1;
+  grid-row: 3;
+  align-self: center;
+  justify-self: center;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--midnight-edge) 8%, var(--midnight-edge) 92%, transparent);
+  z-index: 0;
+}
+/* each .t-point's children become direct grid items, placed into that
+   point's own column below */
+.t-point { display: contents; }
+.t-point:nth-child(1) > * { grid-column: 1; }
+.t-point:nth-child(2) > * { grid-column: 2; }
+.t-point:nth-child(3) > * { grid-column: 3; }
+.t-point:nth-child(4) > * { grid-column: 4; }
+.t-point:nth-child(5) > * { grid-column: 5; }
+
+.t-year {
+  grid-row: 2;
+  font-family: var(--mono);
+  font-size: clamp(.62rem, 2.6vw, .82rem);
+  line-height: 1.2;
+  color: #fff;
+  white-space: nowrap;
+}
+.t-year small { color: #93a5ba; margin-left: 1px; font-size: .72em; }
+.t-dot {
+  grid-row: 3;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 0 4px rgba(201,154,74,.16);
+  z-index: 1;
+}
+.t-label {
+  grid-row: 4;
+  font-family: var(--mono);
+  font-size: clamp(.52rem, 2.05vw, .66rem);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #8fa2b8;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* flag markers — "Beginning" over ~457 BC, "Fulfillment" over ~34 AD */
+.t-flag {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  padding-bottom: .5rem;
+  max-width: 100%;
+}
+.t-flag-text {
+  font-family: var(--mono);
+  font-size: clamp(.5rem, 1.9vw, .6rem);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-align: center;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.t-flag-line { width: 1px; height: .7rem; background: var(--gold-bright); opacity: .85; flex: 0 0 auto; }
+
+@media (max-width: 420px) {
+  .hero { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* ---------- LAYOUT ---------- */
+.layout { max-width: 1180px; margin: 0 auto; padding: 0 1.4rem; }
+@media (min-width: 960px) {
+  .layout { display: grid; grid-template-columns: 236px minmax(0,1fr); gap: 3.6rem; align-items: start; }
+}
+
+/* ---------- TOC (desktop sidebar) ---------- */
+.toc {
+  display: none; /* replaced by the hamburger + drawer below 960px */
+  background: var(--vellum);
+  border-bottom: 1px solid var(--vellum-deep);
+  padding: .85rem 0;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; overflow-x: auto; }
+.toc li { flex: 0 0 auto; }
+.toc a {
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .02em;
+  text-transform: uppercase; color: var(--ink-soft); text-decoration: none;
+  white-space: nowrap; display: inline-block; padding-bottom: .3rem;
+  border-bottom: 2px solid transparent;
+}
+.toc a:hover, .toc a.active { color: var(--gold); border-color: var(--gold); }
+.toc a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (min-width: 960px) {
+  .toc { display: block; position: sticky; top: 18vh; z-index: 5; align-self: start; border-bottom: none; padding: 0; }
+  .toc ol { flex-direction: column; gap: .05rem; overflow: visible; }
+  .toc li { flex: initial; border-left: 2px solid var(--vellum-deep); }
+  .toc a {
+    display: block; padding: .42rem .5rem .42rem 1rem; border-bottom: none;
+    white-space: normal; overflow-wrap: break-word; line-height: 1.4;
+  }
+  .toc li:has(a.active) { border-left-color: var(--gold); }
+}
+
+/* ---------- MOBILE NAV: hamburger + slide-in drawer ---------- */
+body.nav-open { overflow: hidden; }
+
+.menu-toggle {
+  position: fixed;
+  top: 1.1rem;
+  left: 1.1rem;
+  z-index: 60;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--midnight);
+  border: 1px solid rgba(201,154,74,.35);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 4px 14px rgba(19,27,42,.3);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.menu-toggle:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(19,27,42,.36); }
+.menu-toggle:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+@media (min-width: 960px) { .menu-toggle { display: none; } }
+
+.menu-toggle-bars { position: relative; width: 1.15rem; height: .8rem; display: block; }
+.menu-toggle-bars span {
+  position: absolute; left: 0; width: 100%; height: 1.5px;
+  background: var(--gold-bright); border-radius: 2px;
+  transition: transform .32s cubic-bezier(.65,0,.35,1), opacity .2s ease, top .32s cubic-bezier(.65,0,.35,1);
+}
+.menu-toggle-bars span:nth-child(1) { top: 0; }
+.menu-toggle-bars span:nth-child(2) { top: 50%; margin-top: -.75px; }
+.menu-toggle-bars span:nth-child(3) { top: 100%; margin-top: -1.5px; }
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars span:nth-child(1) { top: 50%; margin-top: -.75px; transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars span:nth-child(3) { top: 50%; margin-top: -.75px; transform: rotate(-45deg); }
+
+.mobile-nav-overlay {
+  position: fixed; inset: 0; z-index: 55;
+  background: rgba(19,27,42,.55);
+  opacity: 0; visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+.mobile-nav-overlay.open { opacity: 1; visibility: visible; transition: opacity .35s ease, visibility 0s linear 0s; }
+@media (min-width: 960px) { .mobile-nav-overlay { display: none; } }
+
+.mobile-nav {
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 58;
+  width: min(84vw, 320px);
+  background: var(--midnight);
+  color: #fff;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateX(-100%);
+  transition: transform .4s cubic-bezier(.19,1,.22,1);
+  box-shadow: 8px 0 30px rgba(0,0,0,.35);
+  padding: 1.4rem 0 2rem;
+}
+.mobile-nav.open { transform: translateX(0); }
+@media (min-width: 960px) { .mobile-nav { display: none; } }
+
+.mobile-nav-head {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 1.4rem .9rem; margin: 0 1.4rem .6rem;
+  border-bottom: 1px solid rgba(201,154,74,.25);
+}
+.mobile-nav-title { font-family: var(--mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-bright); }
+.mobile-nav-close {
+  display: none;
+  background: none; border: none; color: #cdd8e5; font-size: 1.5rem; line-height: 1;
+  cursor: pointer; padding: .2rem .5rem; border-radius: 4px;
+  transition: color .2s ease, background .2s ease;
+}
+.mobile-nav-close:hover { color: #fff; background: rgba(255,255,255,.08); }
+.mobile-nav-close:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+
+.mobile-nav ol { list-style: none; margin: 0; padding: 0; }
+.mobile-nav li { border-left: 2px solid rgba(147,165,186,.25); }
+.mobile-nav li:has(a.active) { border-left-color: var(--gold-bright); }
+.mobile-nav a {
+  display: block; padding: .68rem 1.4rem .68rem 1.2rem;
+  font-family: var(--mono); font-size: .78rem; letter-spacing: .02em; line-height: 1.45;
+  text-transform: uppercase; color: #b8c4d4; text-decoration: none;
+  transition: color .2s ease, background .2s ease;
+}
+.mobile-nav a:hover, .mobile-nav a.active { color: var(--gold-bright); background: rgba(201,154,74,.08); }
+.mobile-nav a:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: -2px; }
+
+@media (max-width: 959.98px) {
+  .section { scroll-margin-top: 4.5rem; }
+}
+
+/* ---------- MAIN CONTENT ---------- */
+main { padding: 2.6rem 0 6rem; max-width: 700px; }
+.section { margin-bottom: 3.7rem; scroll-margin-top: 1.5rem; }
+.section:last-child { margin-bottom: 4rem; }
+.section p { margin: 0 0 1.15rem; }
+.section p:last-child { margin-bottom: 0; }
+
+h2 {
+  font-family: var(--serif-display); font-weight: 600; font-size: 1.68rem;
+  color: var(--ink); margin: 0 0 1.3rem; line-height: 1.25;
+}
+h2::before { content: ''; display: block; width: 2.4rem; height: 3px; background: var(--seal); margin-bottom: 1rem; }
+h3 {
+  font-family: var(--serif-display); font-weight: 600; font-style: italic;
+  font-size: 1.14rem; color: var(--ink); margin: 1.7rem 0 .8rem;
+}
+
+.lede p:first-child { font-family: var(--serif-display); font-weight: 500; font-size: 1.3rem; line-height: 1.55; }
+.lede p { font-size: 1.14rem; line-height: 1.65; }
+
+.criteria-list { list-style: none; margin: 1.3rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.criteria-list li { display: flex; gap: .75rem; align-items: baseline; }
+.criteria-list .num { font-family: var(--mono); color: var(--seal); font-weight: 500; flex: 0 0 auto; font-size: .92rem; }
+
+.eq-list { margin: 0 0 1.15rem; }
+.equation {
+  font-family: var(--mono); font-size: .88rem; color: var(--ink-soft);
+  background: var(--vellum-soft); border-left: 3px solid var(--gold-bright);
+  padding: .55rem .9rem; margin: 0 0 .55rem; border-radius: 0 4px 4px 0;
+  line-height: 1.6;
+}
+
+.citation { margin: 0 0 1.15rem; padding-left: 1rem; border-left: 2px solid var(--vellum-deep); }
+.citation .ref { display: block; font-family: var(--mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+.citation .txt { font-style: italic; }
+
+.citation-card {
+  background: var(--vellum-soft); border-radius: 8px; padding: 1.1rem 1.25rem;
+  margin: 0 0 1.15rem;
+}
+.citation-card .ref { display: block; font-family: var(--mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+.citation-card blockquote { margin: 0 0 .6rem; font-style: italic; font-size: 1.03rem; line-height: 1.6; }
+.citation-card blockquote:last-child { margin-bottom: 0; }
+.citation-card .gloss { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+.citation-card .equation { margin-top: .2rem; }
+
+.aside-note {
+  font-style: italic; color: var(--ink-soft); background: var(--vellum-soft);
+  border-radius: 4px; padding: .85rem 1.05rem; margin: 0 0 1.15rem; font-size: .97rem;
+}
+
+.worked-calc {
+  background: var(--midnight); color: #e7dfc9; border-radius: 10px;
+  padding: 1.35rem 1.45rem; margin: 0 0 1.3rem;
+  font-family: var(--mono); font-size: .85rem; line-height: 1.85;
+}
+.worked-calc p { margin: 0; }
+.worked-calc .label { color: var(--gold-bright); text-transform: uppercase; letter-spacing: .05em; font-size: .68rem; margin-top: .7rem; }
+.worked-calc .label:first-child { margin-top: 0; }
+.worked-calc .final { color: #fff; font-weight: 500; }
+
+.dss-block { background: var(--vellum-soft); border-radius: 10px; padding: 1.35rem 1.45rem; margin: 0 0 1.15rem; }
+.dss-block .ref { display: block; font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gold); margin-bottom: .5rem; }
+.dss-block .dss-lead { margin: 0 0 .8rem; color: var(--ink-soft); font-size: .95rem; }
+.dss-block .en { font-style: italic; margin: 0 0 1rem; line-height: 1.6; }
+.dss-block .dss-caption { margin: .7rem 0 0; font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); }
+.hebrew { font-family: var(--hebrew); font-size: 1.2rem; line-height: 2; margin: 0; unicode-bidi: isolate; }
+
+.ref-lead { font-size: .98rem; color: var(--ink-soft); }
+
+.summary-table { display: grid; gap: 0; margin: 1.2rem 0 0; }
+.summary-row { display: grid; grid-template-columns: 1fr auto 1.3fr; gap: .9rem; align-items: baseline; padding: .7rem 0; border-bottom: 1px solid var(--vellum-deep); }
+.summary-row:last-child { border-bottom: none; }
+.summary-row .k { font-family: var(--mono); font-size: .84rem; color: var(--ink-soft); }
+.summary-row .eq { font-family: var(--mono); color: var(--gold); }
+.summary-row .v { font-size: .96rem; }
+@media (max-width: 600px) {
+  .summary-row { grid-template-columns: 1fr; gap: .15rem; padding: .8rem 0; }
+  .summary-row .eq { display: none; }
+}
+
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+footer {
+  text-align: center; padding: 2.5rem 1.5rem 3.5rem; color: var(--ink-soft);
+  font-family: var(--mono); font-size: .74rem; letter-spacing: .05em;
+}
+footer .rule { width: 2.4rem; height: 1px; background: var(--vellum-deep); margin: 0 auto 1.1rem; }
+</style>
+<noscript><style>
+  body, .eyebrow, .hero h1, .hero-sub, .timeline-track { opacity: 1 !important; transform: none !important; }
+</style></noscript>
+<script>
+(function() {
+  var root = document.documentElement;
+  var done = false;
+  function reveal() {
+    if (done) return;
+    done = true;
+    root.classList.add('is-ready');
+  }
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    reveal();
+  } else if ('fonts' in document) {
+    document.fonts.ready.then(reveal).catch(reveal);
+    setTimeout(reveal, 350);
+  } else {
+    setTimeout(reveal, 350);
+  }
+})();
+</script>
+</head>
+<body>
+<button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open table of contents">
+  <span class="menu-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+</button>
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+<nav class="mobile-nav" id="mobileNav" aria-label="Table of contents" aria-hidden="true">
+  <div class="mobile-nav-head">
+    <span class="mobile-nav-title">Contents</span>
+    <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Close table of contents"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <ol>
+    <li><a href="#intro">Introduction</a></li><li><a href="#calc-scripture">Calculations for Daniel 9 according to scripture</a></li><li><a href="#calc-time">Calculations for time</a></li><li><a href="#key-points">Key points</a></li><li><a href="#conventional-history">Conventional History</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#rashi">Rashi</a></li><li><a href="#historical-critical">Historical Critical/Mainline/Liberal Christian/Modern Rabbinic Model</a></li><li><a href="#model-458">458/457 Historicist Eschatological Model</a></li><li><a href="#dispensationalist">Dispensationalist/Futurist Model</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#reference">Reference Material</a></li>
+  </ol>
+</nav>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Daniel 9 &middot; Seventy Weeks Prophecy</p>
+    <h1>The 490&#8209;Year<br>Prophecy</h1>
+    <p class="hero-sub">Historicism and empiric data as evidence that Jesus is God</p>
+    <div class="timeline-track" aria-hidden="true">
+      <div class="t-point"><span class="t-flag"><span class="t-flag-text">Beginning</span><span class="t-flag-line"></span></span><span class="t-year">~457<small>BC</small></span><span class="t-dot"></span><span class="t-label">Decree</span></div>
+      <div class="t-point"><span class="t-year">~27<small>AD</small></span><span class="t-dot"></span><span class="t-label">Baptism</span></div>
+      <div class="t-point"><span class="t-year">Apr 7, 30<small>AD</small></span><span class="t-dot"></span><span class="t-label">Crucifixion</span></div>
+      <div class="t-point"><span class="t-flag"><span class="t-flag-text">Fulfillment</span><span class="t-flag-line"></span></span><span class="t-year">~34<small>AD</small></span><span class="t-dot"></span><span class="t-label">Martyr</span></div>
+      <div class="t-point"><span class="t-year">Aug ~30, 70<small>AD</small></span><span class="t-dot"></span><span class="t-label">Desolation</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Table of contents">
+    <ol><li><a href="#intro">Introduction</a></li><li><a href="#calc-scripture">Calculations for Daniel 9 according to scripture</a></li><li><a href="#calc-time">Calculations for time</a></li><li><a href="#key-points">Key points</a></li><li><a href="#conventional-history">Conventional History</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#rashi">Rashi</a></li><li><a href="#historical-critical">Historical Critical/Mainline/Liberal Christian/Modern Rabbinic Model</a></li><li><a href="#model-458">458/457 Historicist Eschatological Model</a></li><li><a href="#dispensationalist">Dispensationalist/Futurist Model</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#reference">Reference Material</a></li></ol>
+  </nav>
+  <main>
+<section class="section lede" id="intro">
+
+<p><cite><strong>This is a revised research paper that has led me to believe Jesus is God, I began writing this when I was agnostic, prior to that, I come from a background of practicing Orthodox Judaism, this also serves as my testimony, if you're skeptical of God's existence or that Jesus is God, I recommend you to do a deep dive into this, enjoy reading and God bless.</strong></cite></p>
+<p>Hey, I'm an agnostic person that grew an interest in aligning scriptural prophecies with academic history.</p>
+<p>In Daniel 9, the prophecy of the "Seventy Weeks" (interpreted as 490 years) starts with "the word to rebuild/restore Jerusalem" and ends with a ~3.5 year period to an end/restriction of "sacrifice".</p>
+<div class="citation-card"><span class="ref">Daniel 9:24-27</span><span class="txt"><blockquote>"Seventy weeks are decreed for your people and your holy city: to finish the transgression, to put an end to sin, and to atone for iniquity, to bring in everlasting righteousness, to seal both vision and prophet, and to anoint a most holy place. Know therefore and understand: from the time that the word went out to restore and rebuild Jerusalem until the time of an anointed prince, there shall be seven weeks; and for sixty-two weeks it shall be built again with streets and moat, but in a troubled time. After the sixty-two weeks, an anointed one shall be cut off and shall have nothing, and the troops of the prince who is to come shall destroy the city and the sanctuary. Its end shall come with a flood, and to the end there shall be war. Desolations are decreed. He shall make a strong covenant with many for one week, and for half of the week He shall make sacrifice and offering cease; and in their place shall be an abomination that desolates, until the decreed end is poured out upon the desolator."</blockquote></span></div>
+<div class="citation-card"><span class="ref">Daniel 12:11-12</span><span class="txt"><blockquote>"From the time that the regular burnt offering is taken away and the abomination that desolates is set up, there shall be one thousand two hundred ninety (1290) days. Happy are those who persevere and attain the thousand three hundred thirty-five (1335) days."<p><p class="equation">1290/365.24 = ~3.53192 years</p><p class="equation">1335/365.24 = ~3.65513 years</p><p>This roughly matches the half of the week out of the final 70th week in Daniel 9, it also fits a dual fulfillment stance, the Romans led by Titus, desecrating the Second Temple in the middle of the 7 year (66-73 CE) Jewish-Roman war, <strong>set up an idol for ~3.5 years between 66-70 CE</strong>, same with Antioch IV, who desecrated the First Temple in 164-167 BCE, the book of Daniel was written in 164-167 BCE as most secular historians suggest or earlier in 536-530 BCE as most traditionalists do. I mention Daniel 12 under "Key Points" again as an additional reminder.</p></blockquote></span></div>
+<p><strong>The criteria to the fulfillment of the 490 years are mentioned in Daniel 9:24:</strong></p>
+<ul class="criteria-list">
+<li><span class="num">1.</span><span>To finish the transgression,</span></li>
+<li><span class="num">2.</span><span>To make an end of sins,</span></li>
+<li><span class="num">3.</span><span>To make reconciliation for iniquity,</span></li>
+<li><span class="num">4.</span><span>To bring in everlasting righteousness,</span></li>
+<li><span class="num">5.</span><span>To seal up vision and prophecy,</span></li>
+<li><span class="num">6.</span><span>To anoint the Most Holy.</span></li></ul>
+<p><p><strong>The following questions are to be answered according to Daniel 9:24-27:</strong></p></p>
+<p>Who issued the decree to restore and rebuild Jerusalem in the first 7 weeks (49 years) and in which year of history?</p>
+<p>Who was his anointed one who was cut off after 62 weeks (434 years) and in which year of history?</p>
+<p>Who strengthened a covenant for the princes for one week (7 years), abolishes sacrifices in the middle of the week (~3.5 years), and in which year of history did all of this happen?</p>
+<p>Any empirical evidence to confirm the history of each claim to the surrounding events?</p>
+<p>Were the 6 core criteria's fulfilled during a consecutive 490 year timeframe?</p>
+<p><strong>Do all of these answers add up to 490 years without contradicting empirical evidence contributing to academic history?</strong></p>
+
+</section>
+<section class="section" id="calc-scripture">
+<h2>Calculations for Daniel 9 according to scripture</h2>
+<div class="eq-list">
+<p class="equation">1 prophetic day = 1 solar year (Ezekiel 4:6, Numbers 14:34)</p>
+<p class="equation">1 prophetic week = 7 years (Daniel 9:24, Leviticus 25:8, 490/70 = 7)</p>
+<p class="equation">Half a prophetic week = ~3.5 years (7/2 = 3.5)</p>
+<p class="equation">70 weeks = 490 years (Daniel 9:24, 70*7 = 490)</p>
+</div>
+<p>Solar year = 365.24 days, the time it takes Earth to complete a full orbit around the Sun.</p>
+<p class="aside-note">*Note: Ancient astronomers mainly knew this by tracking shadows with a gnomon or using the power of accumulation over a long period.</p>
+</section>
+<section class="section" id="calc-time">
+<h2>Calculations for time</h2>
+<div class="citation"><span class="ref">Ezekiel 4:6</span><span class="txt">"I have assigned you one day for each year".</span></div><div class="citation"><span class="ref">Numbers 14:34</span><span class="txt">"According to the number of days which you toured the Land forty days, a day for each year, you will thus bear your iniquities for forty years; thus you will come to know My alienation".</span></div><p class="equation">1 prophetic day = 1 solar year (Ezekiel 4:6, Numbers 14:34)</p><div class="citation"><span class="ref">Genesis 2:2</span><span class="txt">Shows there are 7 days a week - "By the seventh day God had finished the work he had been doing; so on the seventh day he rested from all his work".</span></div><div class="citation"><span class="ref">1 Kings 4:7</span><span class="txt">Shows there are 12 months in a year - "And Solomon had twelve governors over all Israel, who provided food for the king and his household; each one made provision for one month of the year".</span></div><div class="citation"><span class="ref">Genesis 7:11</span><span class="txt">The flood begins on the 17th day of the 2nd month.</span></div><div class="citation"><span class="ref">Genesis 8:4</span><span class="txt">The ark comes to rest on the 17th day of the 7th month.</span></div><div class="citation"><span class="ref">Genesis 8:14</span><span class="txt">In the second month, on the twenty-seventh day of the month, the earth was dry.</span></div><div class="citation"><span class="ref">Genesis 7:24, Genesis 8:3</span><span class="txt">The water prevailed for "150 days".</span></div><p class="equation">150/5 = 30 days per month</p><p class="equation">30*12 = 360 days (360 days = prophetic year)</p><p class="equation">27-17 = 10.88 days (inclusively)</p><p>The Hebrew calendar was and is observed by the lunar cycle, consisting of 12 moon cycles a year.</p><p class="equation">1 lunar cycle = 29.53 days</p><p>Ancient Israelites waited for 2 witnesses to physically see the first tiny sliver of the waxing crescent moon in the night sky.</p><p>The moon's orbit visible sliver always appears at either 29 days or 30 days after the last one.</p><p>Therefore, if you alternate 29 day and 30 day months over 12 months, it averages to 29.5 days per month, you reach 354 days a year.</p><p>The specific astronomical decimal of 29.53 was calculated by Babylonian and Greek astronomers, the Talmud Tractate Rosh Hashanah 25a also includes this math, Rabban Gamliel states:  The renewal of the moon takes no less than twenty-nine and a half days, plus two-thirds of an hour, plus seventy-three of the 1,080 subsections of an hour.</p><p>There are 10 days until the earth was dry, ancient chronologists, including some authors of the Talmud, noted the flood was intended to be exactly 1 solar cycle, to get from a lunar year to a solar year, you count the 17th up to the 27th and it, yielding roughly 11 days (mathematically 10.88).</p><p class="equation">The Math: 354.36 days of a lunar year + 10.88 days for the gap to the solar year = 365.24 days in a solar year</p><div class="worked-calc"><p>"Twenty-nine and a half days..." gives us 29 days and 12 hours.</p><p>"...plus two-thirds of an hour..." since there are 1080 subsections in 1 hour, 2/3rds of 1 hour is 360 (1080/3=360 1080-360=720)</p><p>"...plus seventy-three of the 1,080 subsections." adding 73 to 720 = 793 subsections.</p><p>29 days, 12 hours, 793 subsections</p><p>Calculating the subsections to modern time:</p><p>1 hour = 1080 subsections, 1080/60 = 18, 1 minute = 18 subsections</p><p>793/18= 44.0555 minutes, leaving us with 44 minutes and 1 subsection,</p><p>1 subsection = 3.33 seconds</p><p class="label">Adding it all up makes up for:</p><p>29 days, 12 hours, 44 minutes and 3.33 seconds.</p><p class="final">Converted to a decimal = 29.53059 days</p></div><p>Besides that, ancient astronomers also knew a solar year is 365.24 days by tracking shadows with a gnomon or using the power of accumulation over a long period.</p>
+</section>
+<section class="section" id="key-points">
+<h2>Key points</h2>
+<div class="citation-card"><span class="ref">Jeremiah 29:10</span><blockquote>"For thus says the Lord: Only when Babylon’s seventy years are completed will I visit you, and I will fulfill to you my promise and bring you back to this place."</blockquote><p class="gloss">This precisely matches mathematically and historically, <strong>from the time of the First Temple's destruction in 586 BCE to the completion of the Second Temple in 516 BCE = 70 years.</strong></p>
+<p class="aside-note">According to Daniel 9:1-2, <strong>Daniel mentions the 70 years of Jerusalem desolation (empirically proven to be between 586-516 BCE) and that he studied Jeremiah's calculations, prophecies and visions</strong>: "In the first year of Darius, the son of Ahasuerus of the seed of Media, who was crowned over the kingdom of the Chaldeans. In the first year of his reign, <strong>I, Daniel, contemplated the calculations, the number of the years that the word of the Lord had come to Jeremiah the prophet, since the destruction of Jerusalem seventy years.</strong>"</p>
+</div>
+<div class="citation-card"><span class="ref">Isaiah 7:8</span><blockquote>"For the head of Aram is Damascus, and the head of Damascus is Rezin. (Within sixty-five years Ephraim will be shattered, no longer a people.)."</blockquote><p class="gloss">734 BCE - 669 BCE = 65 years, this prophecy matches conventional historical timeframes, it's both mathematically and historically precise, in Isaiah 7, prophet Isaiah warns King Ahaz of Judah during the Syro-Ephraimite war, in 734 BCE, we have empirical evidence to support this from the '<a href="#assyrian-eponym">Manuscript of the Assyrian Eponym Chronicle from Nineveh</a>', more specifically the <a href="#assyrian-eponym">Bur-Sagale Eponym tablets</a>, which was an ancient Neo-Assyrian year entry from the Assyrian Eponym Canon, depicting a dating system, astronomers precisely calculated the solar eclipse date down to June 15, 763 BCE, counting forward from 763 BCE to 745 BCE, when aligning with the Limmu List, which is a chronological record of officials called limmu or eponyms who gave their name to a governing year in Assyria, it falls onto Tiglath-Pileser III's reign which began in 745 BCE, the same tablets pinpoint Bēl-dān, who was appointed as a governor twice under Pileser's rule in 744 BCE and 734 BCE, during Bēl-dān's second rule in 734 BCE, the tablets state "In the time of Bēl-dān against Philistia" matching 2 Kings 16:7 - "Ahaz sent messengers to King Tiglath-pileser of Assyria, saying, “I am your servant and your son. Come up, and rescue me from the hand of the king of Aram and from the hand of the king of Israel, who are attacking me.", in 669 BCE, King Esarhaddon enacted a massive population replacement program, he imported large numbers of prisoners/captives from Babylon, Elam and Syria into Samaria, the remaining Israelites intermarried with these foreign settlers, which completely diluted and shattered Ephraim's unique religious, cultural and ethnic cohesion, giving birth to the group known historically as the Samaritans, we have empirical evidence for Esarhaddon's decree in 669 BCE, from the <a href="#esarhaddon">Esarhaddon's Prism</a> and the <a href="#tel-hadid">Tel Hadid Cuneiform Tablets</a>, which is supported by 2 Kings 17:24 - "The king of Assyria brought people from Babylon, Cuthah, Avva, Hamath, and Sepharvaim, and placed them in the cities of Samaria in place of the people of Israel; they took possession of Samaria, and settled in its cities." and Ezra 4:2 - "they approached Zerubbabel and the heads of families and said to them, “Let us build with you, for we worship your God as you do, and we have been sacrificing to him ever since the days of King Esarhaddon of Assyria who brought us here.”".</p></div>
+<div class="citation-card"><span class="ref">Isaiah 23:15</span><blockquote>"From that day Tyre will be forgotten for seventy years, the lifetime of one king. At the end of seventy years, it will happen to Tyre as in the song about the prostitute."</blockquote><p class="gloss">609 BCE marks the Fall of Harran and the old world order ruled by Assyria, following the death of king Ashur-uballit II, the last king of the Neo-Assyrian Empire, 70 years later, in 539 BCE, Cyrus the Great conquers Babylon, which included Tyre.</p><p class="gloss">609 BCE - 539 BCE = 70 years, this prophecy began with the Battle of Megiddo, in 609 BCE, a clash between Pharaoh Necho II of Egypt and King Josiah of Judah, it's the year the last Assyrian strongholds like Harran fell and the Neo-Babylonian Empire became the dominant superpower in the Near East region, as stated in 2 Kings 23:29 - "In his days Pharaoh Neco king of Egypt went up to the king of Assyria to the river Euphrates. King Josiah went to meet him; but when Pharaoh Neco met him at Megiddo, he killed him.", we have empirical evidence from the encounter between Josiah and Pharaoh Necho II at Megiddo, including <a href="#megiddo">remaining ruins and numerous number of Egyptian-made pottery vessels and East Greek potteries</a>, which date to that period and usually also interpret as representing the Greek mercenaries during their service of the 26th dynasty of Egypt, also called the Saite Period, this period lasted between 664-525 BCE. The <a href="#cyrus">Cyrus Cylinder</a> serves as precise empirical evidence to prove the fall of Babylon to Cyrus the Great in 539 BCE.</p></div>
+<p class="aside-note">*After reading and doing the research to all of this up until this point, I'm 99% convinced God as in the Father exists, now I'm on a quest to find out if the Son does too.</p>
+<div class="citation-card">
+<span class="ref">Matthew 24:34</span>
+<blockquote>"Truly I tell you, this <em>generation</em> will not pass away until all these things have taken place."</blockquote>
+<p class="equation">Generation = 40 years</p>
+<p>We know a generation is 40 years from Numbers 14:33-34 - "And your children shall be shepherds in the wilderness for forty years, and shall suffer for your faithlessness, until the last of your dead bodies lies in the wilderness. According to the number of the days in which you spied out the land, forty days, for every day a year, you shall bear your iniquity, forty years, and you shall know my displeasure." and Numbers 32:13 - "And the Lord’s anger was kindled against Israel, <strong>and He made them wander in the wilderness for forty years, until all the generation that had done evil in the sight of the Lord had disappeared.</strong>"</p>
+<p><strong>The book of Matthew was written either between 40-60 CE, or as critical consensus suggests, at around 80-90 CE.</strong></p><p>There's also evidence of a 40 year prophecy from Jesus's crucifixion to the Second Temple's destruction, it's referenced in the <a href="#damascus">Dead Sea Scrolls Damascus Document</a>, which was written roughly a century before the birth of Jesus, conventional history places the completion to be written at around 100 BCE, with the core composition written at around 150-175 BCE. The Talmud also records that 40 years prior to the Second Temple's destruction, the miracles happening to the high priests have stopped entirely, I expand on this later on in my conclusion.</p>
+</div>
+<div class="citation-card">
+<span class="ref">Ezra 7:7-28</span>
+<blockquote>"Some of the people of Israel, and some of the priests and Levites, the singers and gatekeepers, and the temple servants also went up to Jerusalem, in the seventh year of King Artaxerxes. They came to Jerusalem in the fifth month, which was in the seventh year of the king. On the first day of the first month the journey up from Babylon was begun, and on the first day of the fifth month he came to Jerusalem, for the gracious hand of his God was upon him. For Ezra had set his heart to study the law of the Lord, and to do it, and to teach the statutes and ordinances in Israel. This is a copy of the letter that King Artaxerxes gave to the priest Ezra, the scribe, a scholar of the text of the commandments of the Lord and his statutes for Israel: “Artaxerxes, king of kings, to the priest Ezra, the scribe of the law of the God of heaven: Peace. And now I decree that any of the people of Israel or their priests or Levites in my kingdom who freely offers to go to Jerusalem may go with you. For you are sent by the king and his seven counselors to make inquiries about Judah and Jerusalem according to the law of your God, which is in your hand, and also to convey the silver and gold that the king and his counselors have freely offered to the God of Israel, whose dwelling is in Jerusalem, with all the silver and gold that you shall find in the whole province of Babylonia, and with the freewill offerings of the people and the priests, given willingly for the house of their God in Jerusalem. With this money, then, you shall with all diligence buy bulls, rams, and lambs, and their grain offerings and their drink offerings, and you shall offer them on the altar of the house of your God in Jerusalem. Whatever seems good to you and your colleagues to do with the rest of the silver and gold, you may do, according to the will of your God. The vessels that have been given you for the service of the house of your God, you shall deliver before the God of Jerusalem. And whatever else is required for the house of your God, which you are responsible for providing, you may provide out of the king’s treasury. “I, King Artaxerxes, decree to all the treasurers in the province Beyond the River: Whatever the priest Ezra, the scribe of the law of the God of heaven, requires of you, let it be done with all diligence, up to one hundred talents of silver, one hundred cors of wheat, one hundred baths of wine, one hundred baths of oil, and unlimited salt. Whatever is commanded by the God of heaven, let it be done with zeal for the house of the God of heaven, or wrath will come upon the realm of the king and his heirs. We also notify you that it shall not be lawful to impose tribute, custom, or toll on any of the priests, the Levites, the singers, the doorkeepers, the temple servants, or other servants of this house of God. “And you, Ezra, according to the God-given wisdom you possess, appoint magistrates and judges who may judge all the people in the province Beyond the River who know the laws of your God; and you shall teach those who do not know them. All who will not obey the law of your God and the law of the king, let judgment be strictly executed on them, whether for death or for banishment or for confiscation of their goods or for imprisonment.” Blessed be the Lord, the God of our ancestors, who put such a thing as this into the heart of the king to glorify the house of the Lord in Jerusalem, and who extended to me steadfast love before the king and his counselors, and before all the king’s mighty officers. I took courage, for the hand of the Lord my God was upon me, and I gathered leaders from Israel to go up with me."</blockquote><p><em><strong>The 458/457 BCE date for King Artaxerxes I's' decree to Ezra (as stated in Ezra 7:7–28) is established by matching biblical regnal data with <a href="#assyrian-eponym">Persian accession records</a>, historical ancient calendars, <a href="#bm-32234">cuneiform tablets</a>, the <a href="#elephantine">Elephantine Papyri</a> and astronomical data like the <a href="#ptolemy">Ptolemy’s Canon.</a></strong></em></p></div>
+<div class="dss-block">
+<p class="dss-lead">Damascus Document, MB, folio 19, verse 35 - Jewish community of Qumran - 100-130 BCE</p>
+<span class="ref">Col B19</span>
+<p class="en">From the day of the gathering in of the Teacher of the Community until the end of all the men of war who deserted to the Liar, there shall pass about forty years.</p>
+<p class="hebrew" dir="rtl" lang="he">ומיום האסף יורה היחיד עד תום כל אנשי המלחמה אשר שבו עם איש הכזב שנים ארבעים</p>
+<p class="en">This connotes Matthew 24:34 - <strong>"Truly I tell you, this generation will not pass away until all these things have taken place."</strong>, we know <strong>a generation is 40 years</strong> from Numbers 14:34 - <strong>"According to the number of the days in which you spied out the land, forty days, for every day a year, you shall bear your iniquity, forty years, and you shall know My displeasure.".</strong></p>
+<p class="img"><a href="https://cudl.lib.cam.ac.uk/view/MS-TS-00016-00311/2" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Damascus Document, MB, folio 19, line 35.png" alt="Damascus_Document" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://cudl.lib.cam.ac.uk/view/MS-TS-00016-00311/2" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Damascus Document, MB, folio 19, 100-130 BCE</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">11Q13 - Jewish community of Qumran - 100 BCE</p>
+<span class="ref">Col II, 13</span>
+<p class="en">Melchizedek will carry out the vengeance of the judgments of God on that day and he will deliver them from the hand of Belial and from the hand of all the spirits of his lot.</p>
+<p class="hebrew" dir="rtl" lang="he">ומלכי צדק יקום נקם משפטי משפטי אל ביום ההואה ויציל מה מיד בליעל ומיד כול רוחי גורלו</p>
+<p class="en">This directly correlates with the New Testament’s portrayal of Jesus, which elevates him to an eternal, heavenly high priest, who secures ultimate salvation, this is mentioned in Hebrews 7:15-17, 25 - <strong>"It is even more obvious when another priest arises, resembling Melchizedek, one who has become a priest, not through a legal requirement concerning physical descent, but through the power of an indestructible life. For it is attested of him, “You are a priest forever, according to the order of Melchizedek."</strong>, <strong>"Consequently he is able for all time to save those who approach God through him, since he always lives to make intercession for them.".</strong> The victory over Belial (portrayed as a synonym for the words Satan and evil) correlates with 1 John 3:8 - <strong>"Everyone who commits sin is a child of the devil; for the devil has been sinning from the beginning. The Son of God was revealed for this purpose, to destroy the works of the devil."</strong> and where Jesus disarms spiritual rulers and authorities, in Colossians 2:15 - <strong>"He disarmed the rulers and authorities and made a public example of them, triumphing over them in it.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZBY%252BJ8nEX77saG%252BhZD6F3Q%252B5T0t5gLjGsrhk39FxNQV%252FSzXHs7ehX6Z9BjnfT%252FJf33XDdcLPCsNaJVKZI2seZzn1%252FtUeJDtE1Qcdc9ATPXUNzSqrCODfNrUPfSvKt2XYNOpJBmL7rG9kRD5%252BAvfxhZoYA%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/11Q13BW.png" alt="11Q13" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZBY%252BJ8nEX77saG%252BhZD6F3Q%252B5T0t5gLjGsrhk39FxNQV%252FSzXHs7ehX6Z9BjnfT%252FJf33XDdcLPCsNaJVKZI2seZzn1%252FtUeJDtE1Qcdc9ATPXUNzSqrCODfNrUPfSvKt2XYNOpJBmL7rG9kRD5%252BAvfxhZoYA%253D#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 11Q13, 100 BCE</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">4Q246 - Jewish community of Qumran - 50-100 BCE</p>
+<span class="ref">Col II, 1-2</span>
+<p class="en">He will be called the Son of God, and they will call him the Son of the Most High.</p>
+<p class="hebrew" dir="rtl" lang="he">ברה די אל יתאמר ובר עליון יקרונה כזיקיא</p>
+<p class="en">The text is virtually identical to angel Gabriel's annunciation to Mary in Luke 1:32, 35 - <strong>"He will be great, and will be called the Son of the Most High, and the Lord God will give to Him the throne of His ancestor David."</strong>, <strong>"The angel said to her, The Holy Spirit will come upon you, and the power of the Most High will overshadow you; therefore the child to be born will be holy; He will be called Son of God.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBZgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJLWFxAgd%252FhyLKNSdf%252BTLjjTsAjmfstfDaxf%252F7TDZzy32mZFe8Y9P%252FOp7jArYTQh0IDKBjCqIDhy2APK8IZDmR%252BRV3foJTJ1Zs3ETgt9rhnCbLU9Sa6dNjVhjLpulEMLUWAlv9ypeR9S5FN#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q246.jpg" alt="4Q246" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBZgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJLWFxAgd%252FhyLKNSdf%252BTLjjTsAjmfstfDaxf%252F7TDZzy32mZFe8Y9P%252FOp7jArYTQh0IDKBjCqIDhy2APK8IZDmR%252BRV3foJTJ1Zs3ETgt9rhnCbLU9Sa6dNjVhjLpulEMLUWAlv9ypeR9S5FN#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q246, 50-100 BCE</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">4Q521 - Jewish community of Qumran - 50-100 BCE</p>
+<span class="ref">Frag 2, Col II, 1, 8, 12</span>
+<p class="en">The heavens and the earth will obey His Messiah.</p>
+<p class="hebrew" dir="rtl" lang="he">השמים והארץ ישמעו למשיחו</p>
+<p class="en">He will release the captives, make the blind see, straighten up the bent.</p>
+<p class="hebrew" dir="rtl" lang="he">מתיר אסורים פוקח עורים זוקף כפופים</p>
+<p class="en">For He will heal the wounded, and revive the dead, and bring good news to the poor.</p>
+<p class="hebrew" dir="rtl" lang="he">כי ירפא חללים ומתים יחיה ענוים יבשר</p>
+<p class="en">This correlates exactly with Jesus’s response to John the Baptist in the Gospels when asked to prove his messianic identity. Luke 7:22 and Matthew 11:4-5 read: <strong>"And he answered them, Go and tell John what you have seen and heard: the blind receive their sight, the lame walk, the lepers are cleansed, the deaf hear, the dead are raised, the poor have good news brought to them."</strong>, <strong>"Jesus answered them, Go and tell John what you hear and see: the blind receive their sight, the lame walk, the lepers are cleansed, the deaf hear, the dead are raised, and the poor have good news brought to them.".</strong></p>
+<p class="en">1 Samuel 2:6 states that God brings death and makes alive - <strong>"The Lord kills and brings to life; he brings down to Sheol and raises up."</strong>.</p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q521.jpg" alt="4Q521" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q521_text.jpg" alt="4Q521_text" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q521, 50-100 BCE</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">4Q285 - Jewish community of Qumran - 1-50 BCE</p>
+<span class="ref">Frag 7, 3-4</span>
+<p class="en">And they will put to death the Prince/Leader of the Congregation, the Branch of David (Alternatively: And the Prince of the Congregation, the Branch of David, will kill him).</p>
+<p class="hebrew" dir="rtl" lang="he">צמח דוד והמיתו נשיא העדה צמח</p>
+<span class="ref">Frag 7, 5</span>
+<p class="en">with piercings and the priest shall command.</p>
+<p class="hebrew" dir="rtl" lang="he">בנגעים ובמחוללות וצוה כוהן</p>
+<p class="en">Because the Hebrew grammar here is ambiguous, it correlates with two different New Testament messianic portrayals. If translated as the Messiah being killed (pierced), it correlates with John 19:34-37 - <strong>"Instead, one of the soldiers pierced His side with a spear, and at once blood and water came out. (He who saw this has testified so that you also may believe. His testimony is true, and he knows that he tells the truth.) These things occurred so that the scripture might be fulfilled, “None of His bones shall be broken.” And again another passage of scripture says, “They will look on the one whom they have pierced.”"</strong> and Revelation 1:7 - <strong>"Look! He is coming with the clouds; every eye will see Him, even those who pierced Him; and on His account all the tribes of the earth will wail. So it is to be. Amen."</strong>, which describe Jesus being pierced on the cross, fulfilling Zechariah 12:10 - <strong>"And I will pour out a spirit of compassion and supplication on the house of David and the inhabitants of Jerusalem, so that, when they look on the one whom they have pierced, they shall mourn for him, as one mourns for an only child, and weep bitterly over him, as one weeps over a firstborn."</strong>. If translated as the Messiah destroying his enemy, it correlates to where Jesus is prophesied to overthrow the "lawless one" with the breath of his mouth, in 2 Thessalonians 2:8 - <strong>"And then the lawless one will be revealed, whom the Lord Jesus will destroy with the breath of His mouth, annihilating him by the manifestation of His coming."</strong> and Revelation 19:15 - <strong>"From His mouth comes a sharp sword with which to strike down the nations, and He will rule them with a rod of iron; He will tread the wine press of the fury of the wrath of God the Almighty.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIC9goCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0llnHcCGJ23kOEYQBquEZLEee3aFG2PyYiTtFDpeqvmgoxck6ci%252B0zAsmwMv5Lmekr8zngzabdvDSkhQlwqooMDVT0%252B1BvJa4SSwfqL8i0N0gsDBnEZsfauiOMvJ4T4S%252FC4C3AFsf1IPYmJGnPbztzWZKohnCT7XzD8qx3TNuDk698pSAHKG0s8muYfwnCVZ7oAgHEndUwleGEOx30eS4zj5voEjfNzaOyx9k%252BNF9Ku39zmhTG#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q285.jpg" alt="4Q285" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIC9goCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0llnHcCGJ23kOEYQBquEZLEee3aFG2PyYiTtFDpeqvmgoxck6ci%252B0zAsmwMv5Lmekr8zngzabdvDSkhQlwqooMDVT0%252B1BvJa4SSwfqL8i0N0gsDBnEZsfauiOMvJ4T4S%252FC4C3AFsf1IPYmJGnPbztzWZKohnCT7XzD8qx3TNuDk698pSAHKG0s8muYfwnCVZ7oAgHEndUwleGEOx30eS4zj5voEjfNzaOyx9k%252BNF9Ku39zmhTG#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q285, 1-50 BCE</a></span>
+</div>
+<div class="citation-card"><span class="ref">Daniel 12:11-12</span><span class="txt"><blockquote>"From the time that the regular burnt offering is taken away and the abomination that desolates is set up, there shall be one thousand two hundred ninety (1290) days. Happy are those who persevere and attain the thousand three hundred thirty-five (1335) days."<p><p class="equation">1290/365.24 = ~3.53192 years</p><p class="equation">1335/365.24 = ~3.65513 years</p><p>This matches the half of the week out of the final 70th week in Daniel 9, it also fits a dual fulfillment stance, the Romans led by Titus, desecrating the Second Temple in the middle of the 7 year (66-73 CE) Jewish-Roman war, <strong>set up an idol for ~3.5 years between 66-70 CE</strong>, same with Antioch IV, who desecrated the First Temple in 164-167 BCE, the book of Daniel was written in 164-167 BCE as most secular historians suggest or earlier in 536-530 BCE as most traditionalists do.</p></blockquote></span></div>
+</section>
+<section class="section" id="conventional-history">
+<h2>Conventional History</h2>
+<p>We have direct reference to the conquest of Jerusalem from the <a href="#nebuchadnezzar-chronicle">Babylonian Chronicles</a> regarding the reign of Nebuchadnezzar II, furthermore, historians use <a href="https://en.wikipedia.org/wiki/Histories_%28Herodotus%29" target="_blank" rel="noopener noreferrer">Herodotus</a> to point references about the <a href="https://en.wikipedia.org/wiki/First_Persian_invasion_of_Greece" target="_blank" rel="noopener noreferrer">first Persian invasion of Greece</a>, his dates can be compared from there to other Greek sources over the same events, the <a href="https://en.wikipedia.org/wiki/Second_Persian_invasion_of_Greece" target="_blank" rel="noopener noreferrer">second Persian invasion of Greece</a> began in 480 BCE, which is supported by multiple Greek sources, using information from both Herodotus and documents from Mesopotamia we can date the lengths and years for each of the Persian kings back from Xerxes to Cyrus the Great, we know from the <a href="https://en.wikipedia.org/wiki/Babylonian_Chronicles" target="_blank" rel="noopener noreferrer">Babylonian Chronicles</a> that the book of Isaiah and a variety of Greek sources (including Herodotus), that Cyrus conquered Babylon in 539 BCE, in the same conquest Cyrus ended the exile and allowed Jews to return home. The dates are all anchored by references to predictable astronomical events in the same documents/cultures, this includes the Battle of the Eclipse between the Medes and Lydians in 585 BCE, by taking all of those dates and putting them in order based on both Herodotus's narrative and the <a href="https://en.wikipedia.org/wiki/Babylonian_Chronicles" target="_blank" rel="noopener noreferrer">Babylonian Chronicles</a>, we can create a timeline. We know Cyrus conquered Babylon in 539 BCE, from the <a href="https://en.wikipedia.org/wiki/Edict_of_Cyrus" target="_blank" rel="noopener noreferrer">Edict of Cyrus</a> and the <a href="#cyrus">Cyrus Cylinder</a>, it was him that freed the Jews from Babylon according to Isaiah 45:1, the Jews returned from Babylon at that time, we also know this to be historically true from the 70 year of exile prophesied in Jeremiah 29:10, it says "When seventy years are completed for Babylon". The First Temple's destruction was in 586 BCE, where Jews were exiled to Babylon and the completion of the Second Temple in 516 BCE, marked their official return from exile, 586-516 = 70 years, the 586 BCE date is established on top of empirical strata, by cross-referencing evidence, like the <a href="#vat-4956">VAT 4956</a>, a tablet depicting precise lunar and planetary observation made by Babylonian astronomers, which explicitly correlates the astronomical alignments to the 37th year of Nebuchadnezzar II, placing that year precisely in 568 BCE, since we know his 37th year was 568 BCE, we can count backward to his 19th year, the year 2 Kings 25:8 records him burning the First Temple, which lands on 586 BCE, <a href="#nebuchadnezzar-chronicle">Nebuchadnezzar Chronicle's</a> also records the first siege of Jerusalem, stating he captured the city of Adar in his 7th year, this tablet provides absolute empirical proof of the Babylonian presence, the exact chronology of Nebuchadnezzar II's reign and verifies the timeline, leading up to the First Temple's destruction in 586 BCE. The 516 BCE date is established by cross-referencing numerous Babylonian astronomical diaries, like the <a href="#bm-32312">BM 32312</a> tablet, recording astronomical events from 651 BCE during the reign of <a href="https://en.wikipedia.org/wiki/%C5%A0ama%C5%A1-%C5%A1uma-ukin">Shamash-shuma-ukin<a>, the <a href="#vat-4956">VAT 4956</a> tablet, which mathematically anchors the Neo-Babylonian timeline and fixes King Darius I's accession to 522 BCE, the <a href="#ptolemy">Ptolemy's Canon</a>, Ezra 4:4-5, Ezra 4:24 and Ezra 6:1-5, Ezra 6:15 which reference King Darius I completing the Second Temple's construction during his 6th year of reign. The 458/457 BCE date for King Artaxerxes I's' decree to Ezra (as stated in Ezra 7:7–28) is established by matching biblical regnal data with <a href="#assyrian-eponym">Persian accession records</a>, historical ancient calendars, <a href="#bm-32234">cuneiform tablets</a>, the <a href="#elephantine">Elephantine Papyri</a> and astronomical data like the <a href="#ptolemy">Ptolemy’s Canon</a>, the <a href="#bm-32234">BM32234 Tablet</a> proves King Artaxerxes I began his rule in ~464 BCE, Ezra 7:7-28 captures that on the 7th year of his rule, King Artaxerxes I ordered clergymen to assemble together and decreed to restore and rebuild Jerusalem. <a href="https://en.wikipedia.org/wiki/Tacitus" target="_blank" rel="noopener noreferrer">Tacitus</a>, a Roman historian in 116 CE, noted Jesus's crucifixion, <a href="https://en.wikipedia.org/wiki/Lucian" target="_blank" rel="noopener noreferrer">Lucian of Samosata</a>, a Roman philosopher who mocked Christians, mentioned Jesus's crucifixion and existence portraying to around 30-33 CE in his "The Passing of Peregrinus" satirical letters which he wrote in 165 CE, <a href="https://en.wikipedia.org/wiki/Mara_bar_Serapion_on_Jesus" target="_blank" rel="noopener noreferrer">Mara bar Serapion</a>, in 73 CE, shows a letter talking about a "wise Jewish king" being unjustly executed, the Talmud, which Jews adhere to and reject Jesus, also shows <a href="https://www.sefaria.org.il/Sanhedrin.43a.20?lang=bi&with=all&lang2=he" target="_blank" rel="noopener noreferrer">a record of Jesus's crucifixion on Passover</a>, Jewish historian <a href="https://en.wikipedia.org/wiki/Josephus" target="_blank" rel="noopener noreferrer">Flavius Josephus</a>, who wrote a short paragraph in his 93 CE book Jewish Antiquities, describes a wise man that performed surprising deeds, won many followers and was crucified by <a href="https://en.wikipedia.org/wiki/Pontius_Pilate" target="_blank" rel="noopener noreferrer">Pontius Pilate</a>, it mentions "the brother of Jesus, who was called the Christ", "he was the Christ and appeared to them alive on the third day", combining this with all the non-Christian historians, the archeological and historical records, like the <a href="#pilate-stone">Pilate Stone</a> which dates to between 26-36 CE, confirms the Roman governor of Judah ruled during the time Jesus was executed, the <a href="#jehohanan">Jehohanan heel bone</a> serves as empirical evidence from 7-66 CE to describe exactly how the Gospels and external historical records entail Roman crucifixion was carried out precisely. Academically, the <a href="https://en.wikipedia.org/wiki/First_Jewish%E2%80%93Roman_War" target="_blank" rel="noopener noreferrer">first Jewish–Roman War</a> lasted roughly 7 years, between 66-73 CE. Empirical evidence proves <a href="https://en.wikipedia.org/wiki/Tiberius#:~:text=Heir%20to%20Augustus,by%20any%20rivals">Tiberius Julius Caesar</a>'s sole accession began in 14 AD, the same evidence also proves Tiberius received administrative and military authority equal to Augustus in early 12 AD. The <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Velleius_Paterculus/home.html">Velleius Paterculus</a> and <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Tiberius*.html">Suetonius</a> record that Tiberius was granted equal proconsular authority and joint administrative power over all provinces and armies in early 12 AD, we can assume this was between January to June, 12 AD. Furthermore, the <a href="#praenestini">Fasti Praenestini</a> fragments, a public Roman calendar carved into marble blocks, honors Tiberius's triumph and his formal elevation alongside Augustus to hold the census (lustrum), which is a task legally exclusive for individuals holding supreme executive authority, this specific marble features a fragment which marks a specific date surrounding this event: October 23, 12 AD. The <a href="#ostienses">Fasti Ostienses</a> are stone inscriptions that record the annual magistrates and imperial acts from the harbor city of Ostia, proving that by 13 AD, Tiberius formally acted with 'imperium proconsulare maius' (supreme proconsular power). Roman historians also records statements from Augustus to Tiberius saying "Since the consuls caused a law to be passed soon after this that he should govern the provinces jointly with Augustus and hold the census with him, he set out for Illyricum on the conclusion of the lustral ceremonies.", recorded in Suetonius (Life of Tiberius, 21) and: "Tiberius showed the same valour, and was attended by the same fortune, when he entered Germany on his later campaigns as in his first. After he had broken the force of the enemy by his expeditions on sea and land, had completed his difficult task in Gaul, and had settled by restraint rather than by punishment the dissensions that had broken out among the Viennenses, at the request of his father that he should have in all the provinces and armies a power equal to his own, the senate and Roman people so decreed. For indeed it was incongruous that the provinces which were being defended by him should not be under his jurisdiction, and that he who was foremost in bearing aid should not be considered an equal in the honour to be won. On his return to the city he celebrated the triumph over the Pannonians and Dalmatians, long since due him, but postponed by reason of a succession of wars. Who can be surprised at its magnificence, since it was the triumph of Caesar. Yet who can fail to wonder at the kindness of fortune to him?", recorded in <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Velleius_Paterculus/home.html">Velleius Paterculus</a>, <a href="https://penelope.uchicago.edu/thayer/e/roman/texts/velleius_paterculus/2d*.html#:~:text=Tiberius%20showed%20the,fortune%20to%20him%3F">Roman History, 2.121</a>.</p>
+</section>
+<section class="section" id="evidence">
+<h2>Evidence</h2>
+<div id="limmu" class="dss-block">
+<p class="dss-lead">Limmu List - 699-858 BCE</p>
+<p class="img"><a href="https://www.livius.org/articles/concept/limmu/limmu-list-858-699-bce/" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Limmu List.jpg" alt="Limmu_List" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.livius.org/articles/concept/limmu/limmu-list-858-699-bce/" target="_blank" rel="noopener noreferrer">Empirical evidence serving as a chronological record of officials called limmu or eponyms, who gave their name to a governing year in Assyria</a></span>
+</div>
+<div id="assyrian-eponym" class="dss-block">
+<p class="dss-lead">Assyrian Eponym Chronicle from Nineveh - 727-817 BCE</p>
+<p class="img"><a href="https://oracc.museum.upenn.edu/saao/aebp/Eponymlistsandchronicles/index.html" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Manuscript of the Assyrian Eponym Chronicle from Nineveh.jpg" alt="Assyrian_Eponym_Chronicle" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://oracc.museum.upenn.edu/saao/aebp/Eponymlistsandchronicles/index.html" target="_blank" rel="noopener noreferrer">Empirical evidence depicting Neo-Assyrian year entries from the Assyrian Eponym Canon</a></span>
+</div>
+<div id="esarhaddon" class="dss-block">
+<p class="dss-lead">Esarhaddon Prisms - 669-681 BCE</p>
+<p class="img"><a href="https://www.britishmuseum.org/collection/object/W_1929-1012-1" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Esarhaddon's Prism A.jpg" alt="Esarhaddon_Prism_A" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://www.worldhistory.org/image/7328/assyrian-prism-of-esarhaddon/" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Esarhaddon's Prism B.jpg" alt="Esarhaddon_Prism_B" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.britishmuseum.org/collection/object/W_1929-1012-1" target="_blank" rel="noopener noreferrer">Empirical evidence supporting King Esarhaddon's population replacement decree in 669 BCE</a></span>
+</div>
+<div id="tel-hadid" class="dss-block">
+<p class="dss-lead">Tel Hadid - 664-698 BCE</p>
+<p class="img"><a href="https://www.imj.org.il/en/place-collections/tel-hadid" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Tel Hadid 1.jpg" alt="Tel_Hadid_1" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://www.imj.org.il/en/place-collections/tel-hadid" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Tel Hadid 2.jpg" alt="Tel_Hadid_2" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.imj.org.il/en/place-collections/tel-hadid" target="_blank" rel="noopener noreferrer">Empirical evidence for local economic transactions in the ancient city of Tel Hadid, from land sale in 698 BCE and a promissory loan note from 664 BCE</a></span>
+</div>
+<div id="bm-32312" class="dss-block">
+<p class="dss-lead">Babylonian cuneiform tablet 'BM 32312' - 651-652 BCE</p>
+<p class="img"><a href="https://www.ebl.lmu.de/library/BM.32312" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/BM 32312.jpg" alt="BM_32312" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.ebl.lmu.de/library/BM.32312" target="_blank" rel="noopener noreferrer">Empirical evidence recording estronomical events from 651 BCE during the reign of Shamash-shuma-ukin, 651-652 BCE</a></span>
+</div>
+<div id="megiddo" class="dss-block">
+<p class="dss-lead">Megiddo's Ancient Ceramics and Ruins - 525-664 BCE</p>
+<p class="img"><a href="https://www.academia.edu/127316116/Josiah_at_Megiddo_New_Evidence_from_the_Field" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Megiddo ruins.jpg" alt="Megiddo_Ruins" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://www.academia.edu/127316116/Josiah_at_Megiddo_New_Evidence_from_the_Field" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Megiddo pottery A.jpg" alt="Megiddo_pottery_A" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://www.academia.edu/127316116/Josiah_at_Megiddo_New_Evidence_from_the_Field" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Megiddo pottery B.jpg" alt="Megiddo_pottery_B" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.academia.edu/127316116/Josiah_at_Megiddo_New_Evidence_from_the_Field" target="_blank" rel="noopener noreferrer">Empirical evidence showing the remains from Megiddo, during the 26th dynasty of Egypt</a></span>
+</div>
+<div id="nebuchadnezzar-chronicle" class="dss-block">
+<p class="dss-lead">Nebuchadnezzar/Jerusalem Chronicle - 594 BCE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Nebuchadnezzar_Chronicle" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Early Years of Nebuchadnezzar chronicle, dated 590 BC.jpg" alt="Nebuchadnezzar_Chronicle" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Nebuchadnezzar_Chronicle" target="_blank" rel="noopener noreferrer">Empirical evidence depicting the early years of Nebuchadnezzar II's reign, 605-594 BCE</a></span>
+</div>
+<div id="vat-4956" class="dss-block">
+<p class="dss-lead">Precise Babylonian astronomical observations 'VAT 4956' - 567-568 BCE</p>
+<p class="img"><a href="https://www.ebl.lmu.de/library/VAT.4956?tab=cdli" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/VAT 4956.jpg" alt="VAT_4956" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.ebl.lmu.de/library/VAT.4956?tab=cdli" target="_blank" rel="noopener noreferrer">Precise lunar and planetary observation made by Babylonian astronomers, 567-568 BCE</a></span>
+</div>
+<div id="cyrus" class="dss-block">
+<p class="dss-lead">Cyrus Cylinder - 538 BCE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Cyrus_Cylinder" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Cyrus Cylinder.jpg" alt="Cyrus_Cylinder" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Cyrus_Cylinder" target="_blank" rel="noopener noreferrer">Empirical evidence proving the fall of Babylon to Cyrus the Great in 539 BCE</a></span>
+</div>
+<div id="elephantine" class="dss-block">
+<p class="dss-lead">Elephantine Papyri - 399-495 BCE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Elephantine_papyri_and_ostraca" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Elephantine Papyri.jpg" alt="Elephantine_Papyri" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Elephantine_papyri_and_ostraca" target="_blank" rel="noopener noreferrer">Empirical evidence proving King Artaxerxes I's reign began when he sat on his throne in ~464 BCE</a></span>
+</div>
+<div id="bm-32234" class="dss-block">
+<p class="dss-lead">Babylonian cuneiform tablet 'BM 32234' - 300-447 BCE</p>
+<p class="img"><a href="https://www.britishmuseum.org/collection/object/W_1876-1117-1961" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/BM 32234 Babylonian cuneiform tablet showing Xerxes 1 was murdered in 465 BC and the transition of power to King Artaxerxes.jpg" alt="BM_32234" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://www.britishmuseum.org/collection/object/W_1876-1117-1961" target="_blank" rel="noopener noreferrer">Empirical evidence depicting the transition of power to King Artaxerxes I, the year his father King Xerxes I was murdered, 465 BCE</a></span>
+</div>
+<div id="ptolemy" class="dss-block">
+<p class="dss-lead">Ptolemy's Canon of Kings - 150 CE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Canon_of_Kings" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Ptolemy's Canon.jpg" alt="Ptolemy's_Canon" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Canon_of_Kings" target="_blank" rel="noopener noreferrer">Empirical evidence dating a list of kings, used by ancient astronomers</a></span>
+</div>
+<div id="damascus" class="dss-block">
+<p class="dss-lead">Damascus Document, MB, folio 19, verse 35 - Jewish community of Qumran - 100-130 BCE</p>
+<span class="ref">Col B19</span>
+<p class="en">From the day of the gathering in of the Teacher of the Community until the end of all the men of war who deserted to the Liar, there shall pass about forty years.</p>
+<p class="hebrew" dir="rtl" lang="he">ומיום האסף יורה היחיד עד תום כל אנשי המלחמה אשר שבו עם איש הכזב שנים ארבעים</p>
+<p class="en">This connotes Matthew 24:34 - <strong>"Truly I tell you, this generation will not pass away until all these things have taken place."</strong>, we know <strong>a generation is 40 years</strong> from Numbers 14:34 - <strong>"According to the number of the days in which you spied out the land, forty days, for every day a year, you shall bear your iniquity, forty years, and you shall know My displeasure.".</strong></p>
+<p class="img"><a href="https://cudl.lib.cam.ac.uk/view/MS-TS-00016-00311/2" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Damascus Document, MB, folio 19, line 35.png" alt="Damascus_Document" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://cudl.lib.cam.ac.uk/view/MS-TS-00016-00311/2" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Damascus Document, MB, folio 19, 100-130 BCE</a></span>
+</div>
+<div id="11Q13" class="dss-block">
+<p class="dss-lead">11Q13 - Jewish community of Qumran - 100 BCE</p>
+<span class="ref">Col II, 13</span>
+<p class="en">Melchizedek will carry out the vengeance of the judgments of God on that day and he will deliver them from the hand of Belial and from the hand of all the spirits of his lot.</p>
+<p class="hebrew" dir="rtl" lang="he">ומלכי צדק יקום נקם משפטי משפטי אל ביום ההואה ויציל מה מיד בליעל ומיד כול רוחי גורלו</p>
+<p class="en">This directly correlates with the New Testament’s portrayal of Jesus, which elevates him to an eternal, heavenly high priest, who secures ultimate salvation, this is mentioned in Hebrews 7:15-17, 25 - <strong>"It is even more obvious when another priest arises, resembling Melchizedek, one who has become a priest, not through a legal requirement concerning physical descent, but through the power of an indestructible life. For it is attested of him, “You are a priest forever, according to the order of Melchizedek."</strong>, <strong>"Consequently he is able for all time to save those who approach God through him, since he always lives to make intercession for them.".</strong> The victory over Belial (portrayed as a synonym for the words Satan and evil) correlates with 1 John 3:8 - <strong>"Everyone who commits sin is a child of the devil; for the devil has been sinning from the beginning. The Son of God was revealed for this purpose, to destroy the works of the devil."</strong> and where Jesus disarms spiritual rulers and authorities, in Colossians 2:15 - <strong>"He disarmed the rulers and authorities and made a public example of them, triumphing over them in it.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZBY%252BJ8nEX77saG%252BhZD6F3Q%252B5T0t5gLjGsrhk39FxNQV%252FSzXHs7ehX6Z9BjnfT%252FJf33XDdcLPCsNaJVKZI2seZzn1%252FtUeJDtE1Qcdc9ATPXUNzSqrCODfNrUPfSvKt2XYNOpJBmL7rG9kRD5%252BAvfxhZoYA%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/11Q13BW.png" alt="11Q13" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZBY%252BJ8nEX77saG%252BhZD6F3Q%252B5T0t5gLjGsrhk39FxNQV%252FSzXHs7ehX6Z9BjnfT%252FJf33XDdcLPCsNaJVKZI2seZzn1%252FtUeJDtE1Qcdc9ATPXUNzSqrCODfNrUPfSvKt2XYNOpJBmL7rG9kRD5%252BAvfxhZoYA%253D#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 11Q13, 100 BCE</a></span>
+</div>
+<div id="4Q246" class="dss-block">
+<p class="dss-lead">4Q246 - Jewish community of Qumran - 50-100 BCE</p>
+<span class="ref">Col II, 1-2</span>
+<p class="en">He will be called the Son of God, and they will call him the Son of the Most High.</p>
+<p class="hebrew" dir="rtl" lang="he">ברה די אל יתאמר ובר עליון יקרונה כזיקיא</p>
+<p class="en">The text is virtually identical to angel Gabriel's annunciation to Mary in Luke 1:32, 35 - <strong>"He will be great, and will be called the Son of the Most High, and the Lord God will give to Him the throne of His ancestor David."</strong>, <strong>"The angel said to her, The Holy Spirit will come upon you, and the power of the Most High will overshadow you; therefore the child to be born will be holy; He will be called Son of God.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBZgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJLWFxAgd%252FhyLKNSdf%252BTLjjTsAjmfstfDaxf%252F7TDZzy32mZFe8Y9P%252FOp7jArYTQh0IDKBjCqIDhy2APK8IZDmR%252BRV3foJTJ1Zs3ETgt9rhnCbLU9Sa6dNjVhjLpulEMLUWAlv9ypeR9S5FN#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q246.jpg" alt="4Q246" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBZgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJLWFxAgd%252FhyLKNSdf%252BTLjjTsAjmfstfDaxf%252F7TDZzy32mZFe8Y9P%252FOp7jArYTQh0IDKBjCqIDhy2APK8IZDmR%252BRV3foJTJ1Zs3ETgt9rhnCbLU9Sa6dNjVhjLpulEMLUWAlv9ypeR9S5FN#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q246, 50-100 BCE</a></span>
+</div>
+<div id="4Q521" class="dss-block">
+<p class="dss-lead">4Q521 - Jewish community of Qumran - 50-100 BCE</p>
+<span class="ref">Frag 2, Col II, 1, 8, 12</span>
+<p class="en">The heavens and the earth will obey His Messiah.</p>
+<p class="hebrew" dir="rtl" lang="he">השמים והארץ ישמעו למשיחו</p>
+<p class="en">He will release the captives, make the blind see, straighten up the bent.</p>
+<p class="hebrew" dir="rtl" lang="he">מתיר אסורים פוקח עורים זוקף כפופים</p>
+<p class="en">For He will heal the wounded, and revive the dead, and bring good news to the poor.</p>
+<p class="hebrew" dir="rtl" lang="he">כי ירפא חללים ומתים יחיה ענוים יבשר</p>
+<p class="en">This correlates exactly with Jesus’s response to John the Baptist in the Gospels when asked to prove his messianic identity. Luke 7:22 and Matthew 11:4-5 read: <strong>"And he answered them, Go and tell John what you have seen and heard: the blind receive their sight, the lame walk, the lepers are cleansed, the deaf hear, the dead are raised, the poor have good news brought to them."</strong>, <strong>"Jesus answered them, Go and tell John what you hear and see: the blind receive their sight, the lame walk, the lepers are cleansed, the deaf hear, the dead are raised, and the poor have good news brought to them.".</strong></p>
+<p class="en">1 Samuel 2:6 states that God brings death and makes alive - <strong>"The Lord kills and brings to life; he brings down to Sheol and raises up."</strong>.</p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q521.jpg" alt="4Q521" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q521_text.jpg" alt="4Q521_text" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q521, 50-100 BCE</a></span>
+</div>
+<div id="4Q285" class="dss-block">
+<p class="dss-lead">4Q285 - Jewish community of Qumran - 1-50 BCE</p>
+<span class="ref">Frag 7, 3-4</span>
+<p class="en">And they will put to death the Prince/Leader of the Congregation, the Branch of David (Alternatively: And the Prince of the Congregation, the Branch of David, will kill him).</p>
+<p class="hebrew" dir="rtl" lang="he">צמח דוד והמיתו נשיא העדה צמח</p>
+<span class="ref">Frag 7, 5</span>
+<p class="en">with piercings and the priest shall command.</p>
+<p class="hebrew" dir="rtl" lang="he">בנגעים ובמחוללות וצוה כוהן</p>
+<p class="en">Because the Hebrew grammar here is ambiguous, it correlates with two different New Testament messianic portrayals. If translated as the Messiah being killed (pierced), it correlates with John 19:34-37 - <strong>"Instead, one of the soldiers pierced His side with a spear, and at once blood and water came out. (He who saw this has testified so that you also may believe. His testimony is true, and he knows that he tells the truth.) These things occurred so that the scripture might be fulfilled, “None of His bones shall be broken.” And again another passage of scripture says, “They will look on the one whom they have pierced.”"</strong> and Revelation 1:7 - <strong>"Look! He is coming with the clouds; every eye will see Him, even those who pierced Him; and on His account all the tribes of the earth will wail. So it is to be. Amen."</strong>, which describe Jesus being pierced on the cross, fulfilling Zechariah 12:10 - <strong>"And I will pour out a spirit of compassion and supplication on the house of David and the inhabitants of Jerusalem, so that, when they look on the one whom they have pierced, they shall mourn for him, as one mourns for an only child, and weep bitterly over him, as one weeps over a firstborn."</strong>. If translated as the Messiah destroying his enemy, it correlates to where Jesus is prophesied to overthrow the "lawless one" with the breath of his mouth, in 2 Thessalonians 2:8 - <strong>"And then the lawless one will be revealed, whom the Lord Jesus will destroy with the breath of His mouth, annihilating him by the manifestation of His coming."</strong> and Revelation 19:15 - <strong>"From His mouth comes a sharp sword with which to strike down the nations, and He will rule them with a rod of iron; He will tread the wine press of the fury of the wrath of God the Almighty.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIC9goCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0llnHcCGJ23kOEYQBquEZLEee3aFG2PyYiTtFDpeqvmgoxck6ci%252B0zAsmwMv5Lmekr8zngzabdvDSkhQlwqooMDVT0%252B1BvJa4SSwfqL8i0N0gsDBnEZsfauiOMvJ4T4S%252FC4C3AFsf1IPYmJGnPbztzWZKohnCT7XzD8qx3TNuDk698pSAHKG0s8muYfwnCVZ7oAgHEndUwleGEOx30eS4zj5voEjfNzaOyx9k%252BNF9Ku39zmhTG#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q285.jpg" alt="4Q285" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIC9goCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0llnHcCGJ23kOEYQBquEZLEee3aFG2PyYiTtFDpeqvmgoxck6ci%252B0zAsmwMv5Lmekr8zngzabdvDSkhQlwqooMDVT0%252B1BvJa4SSwfqL8i0N0gsDBnEZsfauiOMvJ4T4S%252FC4C3AFsf1IPYmJGnPbztzWZKohnCT7XzD8qx3TNuDk698pSAHKG0s8muYfwnCVZ7oAgHEndUwleGEOx30eS4zj5voEjfNzaOyx9k%252BNF9Ku39zmhTG#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q285, 1-50 BCE</a></span>
+</div>
+<div id="jehohanan" class="dss-block">
+<p class="dss-lead">Jehohanan's heel bone - 7-66 CE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Jehohanan" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Jehohanan's heel bone.jpg" alt="Jehohanan's_Heel_Bone" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Jehohanan" target="_blank" rel="noopener noreferrer">Empirical evidence proving crucifixion was a real method of execution during the time of Jesus, 7-66 CE</a></span>
+</div>
+<div id="ostienses" class="dss-block">
+<p class="dss-lead">Fasti Ostienses - 49 BCE - 175 CE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Fasti_Ostienses" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Fasti Ostienses.jpg" alt="Fasti_Ostienses" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Fasti_Ostienses" target="_blank" rel="noopener noreferrer">Empirical evidence depicting the annual magistrates and imperial acts from the harbor city of Ostia</a></span>
+</div>
+<div id="pilate-stone" class="dss-block">
+<p class="dss-lead">Pilate Stone - 26-36 CE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Pilate_stone" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Pilate Stone.jpg" alt="Pilate_Stone" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Pilate_stone" target="_blank" rel="noopener noreferrer">Empirical evidence depicting an attribution to the Roman prefect Pontius Pilate</a></span>
+</div>
+<div id="praenestini" class="dss-block">
+<p class="dss-lead">Fasti Praenestini - 6-12 CE</p>
+<p class="img"><a href="https://en.wikipedia.org/wiki/Fasti#Extant_fasti" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Fasti Praenestini fragments.jpg" alt="Fasti_Praenestini" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://en.wikipedia.org/wiki/Fasti#Extant_fasti" target="_blank" rel="noopener noreferrer">Empirical evidence depicting Tiberius's triumph and his formal elevation alongside Augustus in 12 CE</a></span>
+</div>
+</section>
+<section class="section" id="rashi">
+<h2>Rashi</h2>
+<p>Besides Moses and Maimonides, Rashi is arguably the most popular Jewish Rabbi who was both a commentator and critical thinker of the Torah and Talmud in Judaism, he based his calculations from a faulty book called Seder Olam, which doesn't make any sense in terms of actual conventional history, he calculates the 490 years beginning from the time of the First Temple's destruction to the time of the Second Temple's destruction, but bases his calculations off some imaginary Persian calendar, which he sources from the book Seder Olam, where it states, the Persian Era lasted only 34 years, whereas conventional history says it lasted for over 200 years, conflating names like Cyrus, Darius and Artaxerxes as different titles for a few individuals. Because of his miscalculation of historical events based on the book Seder Olam, Rashi claims the First Temple's destruction was in the Jewish year 3338, which equals to around 421-423 BCE, whereas the First Temple's actual destruction was in 586 BCE. So of course if you do 490-423+1 you will land right in the middle of the Roman-Jewish war in 68CE where Second Temple sacrifice was forbidden for ~3.5 years, because of Seder Olam's calculations, Rashi states the Second Temple was destroyed during this year, academically though, it's agreed the Second Temple was destroyed in 70 CE and not 68 CE. The First Temple was destroyed in 586 BCE and not 423 BCE. Every historical source agrees that Babylon conquered Jerusalem, which was conquered by the Persians decades later, the timeline to all of these dates places the 423 BCE date to be impossible, since it's more than 100 years after the fall of Babylon and end of Jewish exile, so working back the details from all available sources, we can place the conquest of Jerusalem as mentioned in the <a href="https://en.wikipedia.org/wiki/Babylonian_Chronicles" target="_blank" rel="noopener noreferrer">Babylonian Chronicles</a> to be at around 586 BCE.</p>
+<h3>Rashi's Calculation and the compatibility with conventional history</h3>
+<p>Prophecy began with the destruction of the First Temple, historically this is in 586 BCE, in between Cyrus is the anointed that restores Israel from Babylonian exile (Isaiah 45:1) historically this is in 538 BCE, and Agrippa 2 is the "anointed one" that is cut off after the 62 weeks (7*62=434 years) meaning post 152 BCE (586-434), Rashi claims the prophecy was fulfilled with the destruction of the Second Temple, historically this is in 70 CE:</p>
+<p class="equation">586+70+1(year 0 doesn't count)=655</p>
+<p>This calculation is off by 165 years to fit the 490 year prophecy.</p>
+<p class="aside-note">*Reminder: Rashi is basing his calculations from the book Seder Olam, where it states the First Temple's destruction is in year 3338 of the Jewish Calendar, which corresponds to around 423 BCE, rather than 586 BCE as conventional history shows.</p>
+<div class="eq-list">
+<p class="equation">Jewish year Second Temple Destruction = 3828</p>
+<p class="equation">Jewish year First Temple Destruction = 3338</p>
+<p class="equation">3828-3338=490</p>
+</div>
+<p class="equation">Current Jewish year is 5786 = around 2026~</p>
+<p>Jewish calendar goes by 365.24 days a year.</p>
+<p class="equation">5786-3338 = 2448</p>
+<p class="equation">2026-2448= -422~</p>
+<p>421-423 BCE is where Rashi claims the First Temple was destroyed and "the word to restore and rebuild Jerusalem" started, historically this is inaccurate.</p>
+<p>Who issued the decree to restore and rebuild Jerusalem in the first 7 weeks (49 years) and in which year of history?</p>
+<p>Who was his anointed one who was cut off after 62 weeks (434 years) and in which year of history?</p>
+<p>Who strengthened a covenant for the princes for one week (7 years), abolishes sacrifices in the middle of the week (~3.5 years), and in which year of history did all of this happen?</p>
+<p>Any empirical evidence to confirm the history of each claim to the surrounding events?</p>
+<p>Were the 6 core criteria's fulfilled during a consecutive 490 year timeframe?</p>
+<p><strong>Do all of these answers add up to 490 years without contradicting empirical evidence contributing to academic history?</strong></p>
+<p>I haven't found a consistent answer by Orthodox Jews to all these questions to fit it mathematically and in accordance to academic history.</p>
+<p><strong>If you deny academic history</strong> and go with the Seder Olam calculations as Rashi does, you will no doubt arrive at the logical conclusion that it equals 490 years, but again, you'll have to rely on a faulty timeline claiming the falsehood of the First Temple's destruction beginning in 423 BCE, with no empirical evidence to prove the case, but rather substantial empirical evidence to disprove it.</p>
+<p>Some Jewish rabbis acknowledged the fallacies in Seder Olam:</p>
+<p>Rabbi Isaac Don Abarbanel (15th Century): The legendary commentator and statesman wrestled deeply with the Persian kings listed in the book of Daniel. He ultimately accepted that the Persian Empire lasted much longer than 34 years and had significantly more than four kings.</p>
+<p>The Vilna Gaon (18th Century): While he respected Seder Olam, the Gaon made numerous textual emendations to the text where he found logical contradictions. He proved that even within traditional frameworks, the transmission of the dates was not uniform.</p>
+<p>Rabbi Azariah dei Rossi (16th Century): In his seminal work Me'or Einayim, he was the first major rabbi to flatly reject the traditional timeline. He argued that the non-Jewish historical and astronomical records were undeniably correct. He explicitly asserted that the Jewish calendar was missing roughly 165 years.</p>
+<p>Science and historical criticism can’t demonstrate the traditional Jewish claim, everything is subject to empirical evidence and historical criticism, the empirical evidence and historical criticism disproves the proposed criteria and alleged fulfillment of prophecy according to Rabbinic Jewish interpretation, the book of Daniel predicts these events allegedly being 200-220 years prior on top of all the empirical data we have. <strong>One cannot lay claim Malachi was the last prophet before the prophecy was sealed, without believing the 490 year prophecy in Daniel 9 to be fulfilled, yet Judaism doesn't have a valid mathematically precise answer in accordance to Daniel 9 that matches with academic history</strong>, there's no empirical evidence to disprove this claim, nor is there proof there was a decree to restore or rebuild Jerusalem issued in 425-415BC.
+If Orthodox Judaism excuses it with a dispensationalist view, it breaks the 490 year consecutiveness from start to finish, Orthodox Judaism would have to excuse it to be fulfilled with a second coming, yet mainstream Judaism doesn't believe in a second coming.</p>
+<p><strong>Rabbinic ordination or semicha wasn't codified as a statutory text or legal code during the Second Temple period</strong>, it was viewed as an unbroken tradition and authority that came from Moses and Joshua, functioning through unwritten customary practice and oral transmission until later codified in the Talmud and legal compendiums, because of this, anyone prior to and during the Second Temple period that had deep scriptural knowledge, could attract a following by functioning as a religious teacher or in other words, a Rabbi. The first compilations (Mishnah) of what make up the Talmud were written in 200 CE, whereas Paul's letters (Thessalonians) were written at around 50 CE. The word or term Rabbi was first used in the New Testament prior to any Jewish writing, at the time there were Pharisees, Sadducees, Essenes, Zealots and independent preachers like John the Baptist and Jesus, while the Talmud, being it is a descendant of the Pharisaic movement, refers exclusively to Pharisees, Sadducees and Zealots.</p>
+</section>
+<section class="section" id="historical-critical">
+<h2>Historical Critical/Mainline/Liberal Christian/Modern Rabbinic Model</h2>
+<p>Starts with the destruction of the First Temple in 587 BCE by Nebuchadnezzar II of Babylon with Jeremiah's word going out, the first 7 weeks is 49 years, this is where Cyrus returns Jews from Babylonian exile, we are left with 441 years' worth of unfulfilled prophecy, (note that 21 years later in 516 BCE, the Second Temple is rebuilt, making it a total of 70 years without a temple as Jeremiah 29:10 suggests, but this is not included in the calculation), the chronological error starts when the intended math from Cyrus in 538 BCE to High Priest Onias 3 in 171 BCE, should be 434 years in total, but it is only 367 years, the final week of 7 years begins in 171 BCE, during the first ~3.5 years Hellenizing factions rise and political instability is everywhere after Onias 3's murder, right up until 167 BCE where Antiochus 4 halts all animal sacrifice in the Second Temple, which ends after another ~3.5 years after the Maccabean Revolt succeeds in 164 BCE following the death of Antiochus 4 and the liberation/cleansing of the Second Temple.</p><p>If you do the math, 587-164=423, this view does not fit the 70 week or 490 year prophecy.</p>
+</section>
+<section class="section" id="model-458">
+<h2>458/457 Historicist Eschatological Model</h2>
+<p>Starts with Ezra 7:7-28 in 458/457 BCE with King Artaxerxes I's decree to restore and rebuild Jerusalem, we know this is historically true, so we can presume Jesus's baptism is historically in 27 CE, 69 weeks = 483 prophetic days or 483 solar years, so if you do the math -457+483+1, (the +1 is because there is no year zero) it lands precisely in 27 CE, after which Jesus starts his ~3.5 year ministry, so if you do the math 483+~3.5=486.5 years fulfilled and 27+~3.5, it lands on 30.5 BCE, this is when Jesus is crucified and brings an end to "all sacrifice". <strong> However, if you take into consideration passages from the book of John which say Jesus was crucified on a Friday, on the Eve of Passover and other pieces of evidence, like the Talmud and when comparing it to the astronomical data from NASA and other sources, it shows us to be the case, from this, we understand that the date of crucifixion is April 7, 30 CE, if we go back 486.5 years more, it lands around early 458 BCE, backtracking another 7 years to the beginning of Artaxerxes I's reign lands around late ~465-464 BCE, which is arguably the rough estimate to when exactly King Artaxerxes I began his rule after his father Xerxes I was murdered. From April 7, 30 CE we can also understand that the remainder of the 3.1-~3.5 years land on roughly October 7, 33 CE or early 34 AD and that Jesus began His ministry at roughly early 27 AD.</strong>
+
+The remainder ~3.5 years is when the Gospel is spread by the Apostles to the Gentiles, amounting to 490 solar years, finishing with the Stoning of Stephan at around historically 33/34 CE, also read true by Acts 7:59. Furthermore, when Jesus was crucified in 30 CE, he brought an end to "spiritual sacrifice" and the remaining ~3.5 years can entail a ~3.5 year forbiddance of animal sacrifice during the Roman-Jewish war, which began at around 66 CE leading to the destruction of the Second Temple at around 70 CE. The timeframe from the crucifixion of Jesus in 30.5 CE to the Second Temple's destruction in 70 CE is approximately 40 years, in between there was a ~3.5 year forbiddance of animal sacrifice, so this might actually be the remainder of the ~3.5 years to the 490 solar year prophecy, however if this is the case it breaks the consecutive chain, making the 490 year prophecy off by 40 years, which sums up to a consecutive time of 530 years.</p>
+</section>
+<section class="section" id="dispensationalist">
+<h2>Dispensationalist/Futurist Model</h2>
+<p>It is very similar to the 458/457 model, except they interpret the remainder of the ~3.5 years (half of the 70th week) to be fulfilled later by the antichrist, which leaves a huge gap. Moreover, if you believe this view as a Christian, you will have to reconcile multiple of other inconsistencies mentioned in the book of Revelation regarding the 7 year tribulation period, which would break the math or overlap it, this view isn't consistent with the consecutive timeframe and is arguably contradictive.</p>
+</section>
+<section class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>The 458/457 Model fits the most with the consecutive fulfillment of the 70 weeks or 490 year prophecy mentioned in Daniel 9, aligning with academic history. The historicist eschatological model doesn't go against mainstream Christian doctrine, it sides with biblical and secular academic history, the 490 year prophecy was stated by Daniel in 539 BC, around 82 years before the countdown began, even if the book of Daniel was authored during the Maccabean Revolt in 164-167 BC, the prophecy began centuries prior to the decree of King Artaxerxes I to restore and rebuild Jerusalem in ~458 BC, during his 7th year of rule, as mentioned in Ezra 7:7, which began in ~465-464 BC, empirically proven by the <a href="#bm-32234">Babylonian Tablets</a> and <a href ="#elephantine">Elephantine Papyri</a>, precisely fitting from the beginning in ~458 BC, up until the stoning of Stephen in ~34 AD or completing with an abomination of those who reject Jesus, finishing within a 490 year timeframe, during <a href="https://en.wikipedia.org/wiki/Pontius_Pilate">Pilates</a> reign between 26-36 AD, empirically proven by the <a href="#pilate-stone">Pilate Stone</a>. According to Daniel 9:1-2 and the empirical evidence we have, we know that Daniel was calculating a real literal timeframe for the prophecy, not only symbolically, because he mentions the 70 years of Jerusalem desolation, which is academically and empirically proven to have occurred between 586-516 BC, Daniel verbatimly mentions that he studied Jeremiah's calculations, prophecies and visions in these verses. The 490 year prophecy is the ultimate bridge of proof to the fulfillment of Jesus being His anointed that was cut off, which is mentioned in Daniel 9:26. Furthermore, there's a prophetic pause or gap of 40 years between Jesus's crucifixion and the destruction of the Second Temple, between 30-70 AD, in biblical terms, 40 years equate to a generation, which is prophesied in Matthew 24:34 and the <a href="#damascus">DSS Damascus Document</a> fragment, empirically proven to be written at around 100 BC, it reads between a "Righteous Teacher/Teacher of the community until the end of all the men of war who deserted to the Liar", resembling Matthew 24:34, moreover, the Rabbis who reject Jesus and wrote the Talmud, proclaim that 40 years prior to the destruction of the Second Temple in 70 AD, during the year Jesus was crucified in 30 AD, on the eve of Passover, which always falls in either March or April, that during Yom Kippur, which always falls in either September or October, the ritual involving a strip of crimson wool (a red thread), which was tied to the horns of a scapegoat, has stopped turning white as it previously miraculously did and the ritual involving the 2 rouletted marked tokens saying "for God" and "for Azazel", where the "for God" token has always landed in the right hand of the High Priest before, has stopped landing in the High Priest's right hand, the tractate also mentions that 2 other miracles which aren't exclusive to Yom Kippur have stopped happening during the year of Jesus's crucifixion (although it's mentioned in a tractate dedicated to Yom Kippur), this is all mentioned in the <a href="https://www.sefaria.org.il/Yoma.39b.5?lang=bi&with=all&lang2=en">Babylonian Talmud, tractate Yoma 39B:5</a>. Prior to the Second Temple's destruction on August ~30, 70 AD, there was a ~3.5 year period between 66-70 AD, where animal sacrifice was forbidden, this was fulfilled according to Daniel 12:11-12, during the 40 year generational prophecy between 30-70 AD. Furthermore, there are numerous of other <a href="#4Q246">DSS fragments</a> from the same time period at around 100 BC, that were written by the same Jewish community of Qumran, about a century before Jesus's incarnation, which all prophecy about the Teacher of the community/Righteous Teacher/Messiah being the Son of God, a healer, that revives the dead and will be pierced by a high priest, matching the profile of Caiaphas. <strong><em>To meticulously predict a 490 year prophetic timeline centuries prior to its fulfillment, without contradicting scripture, math or history, is remarkably unlikely to mean anything but proof of Christ's divinity.</em></strong></p>
+<p>Daniel 12:11–12 mentions a period of 1,290 days (approximately ~3.5 years), which provides the most logical timeline for the ~3.5 years of abominations set up in the Second Temple during the First Jewish-Roman War (66–70 AD). It is reasonable to view this prophecy as having a dual or manifold fulfillment involving both Antiochus IV and Titus, as both leaders oversaw ~3.5-year periods of Temple desecration. Historically, this aligns perfectly with the abominations set up by Antiochus IV between 167–164 BC, as well as the events of the Roman-Jewish war (66–73 AD) leading up to the Temple's destruction on August ~30, 70 AD. Furthermore, after Jesus was crucified in the middle of the final week, after ~3.5 years, the Jewish governing council's decision to condemn and stone Saint Stephen in ~34 AD confirmed their spiritually desolate status, (mentioned in Daniel 9:27) sealing the abomination they upheld.</p>
+<p>John the Baptist began his ministry on the 15th year of <a href="https://en.wikipedia.org/wiki/Tiberius#:~:text=Heir%20to%20Augustus,by%20any%20rivals">Tiberius</a>'s reign (Luke 3:1), at around ~27 AD. We have evidence to prove Tiberius received full equal authority to Augustus in early 12 AD, presumably between early January to June, 12 AD, receiving formal recognition on October 23, 12 AD, based on the <a href="#praenestini">Fasti Praenestini</a>, a specific marble, which has a fragment that marks this specific date surrounding the event, furthermore, the <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Velleius_Paterculus/home.html">Velleius Paterculus</a> and <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Tiberius*.html">Suetonius</a> record that Tiberius was granted equal proconsular authority and joint administrative power over all provinces and armies in early 12 AD, we can assume this was between January to June, 12 AD.</p>
+</section>
+<section class="section" id="reference">
+<p class="ref-lead">To make it easier to understand, here's some of the material I mentioned in the "key points" section:</p>
+<div class="dss-block">
+<p class="dss-lead">Damascus Document, MB, folio 19, verse 35 - Jewish community of Qumran - 100-130 BC</p>
+<span class="ref">Col B19</span>
+<p class="en">From the day of the gathering in of the Teacher of the Community until the end of all the men of war who deserted to the Liar, there shall pass about forty years.</p>
+<p class="hebrew" dir="rtl" lang="he">ומיום האסף יורה היחיד עד תום כל אנשי המלחמה אשר שבו עם איש הכזב שנים ארבעים</p>
+<p class="en">This connotes Matthew 24:34 - <strong>"Truly I tell you, this generation will not pass away until all these things have taken place."</strong>, we know <strong>a generation is 40 years</strong> from Numbers 14:34 - <strong>"According to the number of the days in which you spied out the land, forty days, for every day a year, you shall bear your iniquity, forty years, and you shall know My displeasure.".</strong></p>
+<p class="img"><a href="https://cudl.lib.cam.ac.uk/view/MS-TS-00016-00311/2" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/Damascus Document, MB, folio 19, line 35.png" alt="Damascus_Document" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://cudl.lib.cam.ac.uk/view/MS-TS-00016-00311/2" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Damascus Document, MB, folio 19, 100-130 BC</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">11Q13 - Jewish community of Qumran - 100 BC</p>
+<span class="ref">Col II, 13</span>
+<p class="en">Melchizedek will carry out the vengeance of the judgments of God on that day and he will deliver them from the hand of Belial and from the hand of all the spirits of his lot.</p>
+<p class="hebrew" dir="rtl" lang="he">ומלכי צדק יקום נקם משפטי משפטי אל ביום ההואה ויציל מה מיד בליעל ומיד כול רוחי גורלו</p>
+<p class="en">This directly correlates with the New Testament’s portrayal of Jesus, which elevates him to an eternal, heavenly high priest, who secures ultimate salvation, this is mentioned in Hebrews 7:15-17, 25 - <strong>"It is even more obvious when another priest arises, resembling Melchizedek, one who has become a priest, not through a legal requirement concerning physical descent, but through the power of an indestructible life. For it is attested of him, “You are a priest forever, according to the order of Melchizedek."</strong>, <strong>"Consequently he is able for all time to save those who approach God through him, since he always lives to make intercession for them.".</strong> The victory over Belial (portrayed as a synonym for the words Satan and evil) correlates with 1 John 3:8 - <strong>"Everyone who commits sin is a child of the devil; for the devil has been sinning from the beginning. The Son of God was revealed for this purpose, to destroy the works of the devil."</strong> and where Jesus disarms spiritual rulers and authorities, in Colossians 2:15 - <strong>"He disarmed the rulers and authorities and made a public example of them, triumphing over them in it.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZBY%252BJ8nEX77saG%252BhZD6F3Q%252B5T0t5gLjGsrhk39FxNQV%252FSzXHs7ehX6Z9BjnfT%252FJf33XDdcLPCsNaJVKZI2seZzn1%252FtUeJDtE1Qcdc9ATPXUNzSqrCODfNrUPfSvKt2XYNOpJBmL7rG9kRD5%252BAvfxhZoYA%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/11Q13BW.png" alt="11Q13" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZBY%252BJ8nEX77saG%252BhZD6F3Q%252B5T0t5gLjGsrhk39FxNQV%252FSzXHs7ehX6Z9BjnfT%252FJf33XDdcLPCsNaJVKZI2seZzn1%252FtUeJDtE1Qcdc9ATPXUNzSqrCODfNrUPfSvKt2XYNOpJBmL7rG9kRD5%252BAvfxhZoYA%253D#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 11Q13, 100 BC</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">4Q246 - Jewish community of Qumran - 50-100 BC</p>
+<span class="ref">Col II, 1-2</span>
+<p class="en">He will be called the Son of God, and they will call him the Son of the Most High.</p>
+<p class="hebrew" dir="rtl" lang="he">ברה די אל יתאמר ובר עליון יקרונה כזיקיא</p>
+<p class="en">The text is virtually identical to angel Gabriel's annunciation to Mary in Luke 1:32, 35 - <strong>"He will be great, and will be called the Son of the Most High, and the Lord God will give to Him the throne of His ancestor David."</strong>, <strong>"The angel said to her, The Holy Spirit will come upon you, and the power of the Most High will overshadow you; therefore the child to be born will be holy; He will be called Son of God.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBZgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJLWFxAgd%252FhyLKNSdf%252BTLjjTsAjmfstfDaxf%252F7TDZzy32mZFe8Y9P%252FOp7jArYTQh0IDKBjCqIDhy2APK8IZDmR%252BRV3foJTJ1Zs3ETgt9rhnCbLU9Sa6dNjVhjLpulEMLUWAlv9ypeR9S5FN#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q246.jpg" alt="4Q246" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBZgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJLWFxAgd%252FhyLKNSdf%252BTLjjTsAjmfstfDaxf%252F7TDZzy32mZFe8Y9P%252FOp7jArYTQh0IDKBjCqIDhy2APK8IZDmR%252BRV3foJTJ1Zs3ETgt9rhnCbLU9Sa6dNjVhjLpulEMLUWAlv9ypeR9S5FN#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q246, 50-100 BC</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">4Q521 - Jewish community of Qumran - 50-100 BC</p>
+<span class="ref">Frag 2, Col II, 1, 8 12</span>
+<p class="en">The heavens and the earth will obey His Messiah.</p>
+<p class="hebrew" dir="rtl" lang="he">השמים והארץ ישמעו למשיחו</p>
+<p class="en">He will release the captives, make the blind see, straighten up the bent.</p>
+<p class="hebrew" dir="rtl" lang="he">מתיר אסורים פוקח עורים זוקף כפופים</p>
+<p class="en">For He will heal the wounded, and revive the dead, and bring good news to the poor.</p>
+<p class="hebrew" dir="rtl" lang="he">כי ירפא חללים ומתים יחיה ענוים יבשר</p>
+<p class="en">This correlates exactly with Jesus’s response to John the Baptist in the Gospels when asked to prove his messianic identity. Luke 7:22 and Matthew 11:4-5 read: <strong>"And he answered them, Go and tell John what you have seen and heard: the blind receive their sight, the lame walk, the lepers are cleansed, the deaf hear, the dead are raised, the poor have good news brought to them."</strong>, <strong>"Jesus answered them, Go and tell John what you hear and see: the blind receive their sight, the lame walk, the lepers are cleansed, the deaf hear, the dead are raised, and the poor have good news brought to them.".</strong></p>
+<p class="en">1 Samuel 2:6 states that God brings death and makes alive - <strong>"The Lord kills and brings to life; he brings down to Sheol and raises up."</strong>.</p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q521.jpg" alt="4Q521" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q521_text.jpg" alt="4Q521_text" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIBbgYCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0lki4kHzxrWb1%252BoFdm3RZC3VJxOIIUzHV%252BpwuZ1Mk98bxR68y8Z3DVuOwv5DO8YlEI%252FZlTNWi1pj5iX%252FxIinBzrD7dG5v2MLsoXAFIFJQ2NkayXTB14ShbXw%252Fna828H9qyUaYxWOunEHesKdLheDpIEvZ8PdXmkVt%252Fy%252Fx9gA%253D%253D#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q521, 50-100 BC</a></span>
+</div>
+<div class="dss-block">
+<p class="dss-lead">4Q285 - Jewish community of Qumran - 1-50 BC</p>
+<span class="ref">Frag 7, 3-4</span>
+<p class="en">And they will put to death the Prince/Leader of the Congregation, the Branch of David (Alternatively: And the Prince of the Congregation, the Branch of David, will kill him).</p>
+<p class="hebrew" dir="rtl" lang="he">צמח דוד והמיתו נשיא העדה צמח</p>
+<span class="ref">Frag 7, 5</span>
+<p class="en">with piercings and the priest shall command.</p>
+<p class="hebrew" dir="rtl" lang="he">בנגעים ובמחוללות וצוה כוהן</p>
+<p class="en">Because the Hebrew grammar here is ambiguous, it correlates with two different New Testament messianic portrayals. If translated as the Messiah being killed (pierced), it correlates with John 19:34-37 - <strong>"Instead, one of the soldiers pierced His side with a spear, and at once blood and water came out. (He who saw this has testified so that you also may believe. His testimony is true, and he knows that he tells the truth.) These things occurred so that the scripture might be fulfilled, “None of His bones shall be broken.” And again another passage of scripture says, “They will look on the one whom they have pierced.”"</strong> and Revelation 1:7 - <strong>"Look! He is coming with the clouds; every eye will see Him, even those who pierced Him; and on His account all the tribes of the earth will wail. So it is to be. Amen."</strong>, which describe Jesus being pierced on the cross, fulfilling Zechariah 12:10 - <strong>"And I will pour out a spirit of compassion and supplication on the house of David and the inhabitants of Jerusalem, so that, when they look on the one whom they have pierced, they shall mourn for him, as one mourns for an only child, and weep bitterly over him, as one weeps over a firstborn."</strong>. If translated as the Messiah destroying his enemy, it correlates to where Jesus is prophesied to overthrow the "lawless one" with the breath of his mouth, in 2 Thessalonians 2:8 - <strong>"And then the lawless one will be revealed, whom the Lord Jesus will destroy with the breath of His mouth, annihilating him by the manifestation of His coming."</strong> and Revelation 19:15 - <strong>"From His mouth comes a sharp sword with which to strike down the nations, and He will rule them with a rod of iron; He will tread the wine press of the fury of the wrath of God the Almighty.".</strong></p>
+<p class="img"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIC9goCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0llnHcCGJ23kOEYQBquEZLEee3aFG2PyYiTtFDpeqvmgoxck6ci%252B0zAsmwMv5Lmekr8zngzabdvDSkhQlwqooMDVT0%252B1BvJa4SSwfqL8i0N0gsDBnEZsfauiOMvJ4T4S%252FC4C3AFsf1IPYmJGnPbztzWZKohnCT7XzD8qx3TNuDk698pSAHKG0s8muYfwnCVZ7oAgHEndUwleGEOx30eS4zj5voEjfNzaOyx9k%252BNF9Ku39zmhTG#texts-panel" target="_blank" rel="noopener noreferrer"><img decoding="async" src="evidence/4Q285.jpg" alt="4Q285" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a></p>
+<span class="ref" style="text-align: center;"><a href="https://lexicon.qumran-digital.org/v1/index.html?loc=3YCAAIC9goCAgICAgIC9CAkGFAdbuL7YMOekOJw%252FwFNL7Sw4GCOLNT6jdVGD2ylCul6v4e8lZhix19%252FY6DuHaGvBlWluFmQ%252FuD4Qazb90%252B0llnHcCGJ23kOEYQBquEZLEee3aFG2PyYiTtFDpeqvmgoxck6ci%252B0zAsmwMv5Lmekr8zngzabdvDSkhQlwqooMDVT0%252B1BvJa4SSwfqL8i0N0gsDBnEZsfauiOMvJ4T4S%252FC4C3AFsf1IPYmJGnPbztzWZKohnCT7XzD8qx3TNuDk698pSAHKG0s8muYfwnCVZ7oAgHEndUwleGEOx30eS4zj5voEjfNzaOyx9k%252BNF9Ku39zmhTG#texts-panel" target="_blank" rel="noopener noreferrer">Dead Sea Scrolls, Fragment 4Q285, 1-50 BC</a></span>
+</div>
+<div class="summary-table">
+<div class="summary-row"><span class="k">Beginning of Tiberius Julius Caesar's co-reign, becoming equal in authority with Augustus</span><span class="eq">=</span><span class="v">Early 12 AD, during his military campaigns up until his triumph over Germania where he received formal recognition</span></div>
+<div class="summary-row"><span class="k">Pilate Stone</span><span class="eq">=</span><span class="v">Empirically proven to be carved beginning from 26 AD to 36 AD, historically matching the period when Pilate served as the Roman prefect of Judea, during Jesus's baptism, crucifixion and the stoning of Stephen</span></div>
+<div class="summary-row"><span class="k">Book of Jeremiah</span><span class="eq">=</span><span class="v">Written in 580-630 BC</span></div>
+<div class="summary-row"><span class="k">Book of Daniel</span><span class="eq">=</span><span class="v">Written in 164-167 BC as most secular historians suggest or earlier in 536-530 BC as most traditionalists do</span></div>
+<div class="summary-row"><span class="k">King Artaxerxes I's rule begins</span><span class="eq">=</span><span class="v">~464 BC, empirically proven by the Babylonian Tablets</span></div>
+<div class="summary-row"><span class="k">King Artaxerxes I's decree to restore and rebuild Jerusalem</span><span class="eq">=</span><span class="v">~457 BC, during his 7th year of ruling (Ezra 7:7)</span></div>
+<div class="summary-row"><span class="k">Generation</span><span class="eq">=</span><span class="v">40 years (Numbers 14:34)</span></div>
+<div class="summary-row"><span class="k">Second Temple's destruction</span><span class="eq">=</span><span class="v">August ~30, 70 AD, empirically proven strata, multiple archeological sources and recordings from Josephus in The Jewish War and other historical references from during the same time period</span></div>
+<div class="summary-row"><span class="k">Forbiddance of animal sacrifice before the 2nd Temple's destruction</span><span class="eq">=</span><span class="v">~3.5 years (Daniel 12:11-12)</span></div>
+<div class="summary-row"><span class="k">70-40</span><span class="eq">=</span><span class="v">~30 AD, the year of Jesus's Crucifixion. Year 486.5 out of the 490 year prophecy (Daniel 9:24-27)</span></div>
+<div class="summary-row"><span class="k">John begins baptizing</span><span class="eq">=</span><span class="v">~27 AD, on the 15th year from the beginning of Tiberius becoming equal in power with Augustus (Luke 3:1-3)</span></div>
+<div class="summary-row"><span class="k">Jesus's baptism</span><span class="eq">=</span><span class="v">~27 AD, at the age of ~30 (Luke 3:21-23)</span></div>
+<div class="summary-row"><span class="k">Jesus's birth</span><span class="eq">=</span><span class="v">~4-5 BC (Calculating according to Luke 3:23 after backtracking 3.1-~3.5 years from April 7, 30 AD, 27-30-1)</span></div>
+<div class="summary-row"><span class="k">Jesus's crucifixion</span><span class="eq">=</span><span class="v">April 7, 30 AD, in the middle of the final prophetic week, on Friday, the Eve of Passover (John 19:14)</span></div>
+<div class="summary-row"><span class="k">Stoning of Stephen</span><span class="eq">=</span><span class="v">~34 AD (490 year prophecy from Daniel 9 fulfills)</span></div>
+<div class="summary-row"><span class="k">34-27</span><span class="eq">=</span><span class="v">7 years (final week), beginning with Jesus's baptism in ~27 AD, He is crucified after ~3.5 years (middle of the week), in 30 AD, ~3.5 years later (remaining half of the week), the abomination is the Jewish governing council of the time, that rejected Jesus and also stoned the first Christian martyr Stephen to death, in ~34 AD, fulfilling the 490 year prophecy</span></div>
+<div class="summary-row"><span class="k">~34-490-1</span><span class="eq">=</span><span class="v">~457 BC, King Artaxerxes I's decree during his 7th year as a ruler (Ezra 7:7)</span></div>
+</div>
+</section>
+    <footer>
+      <div class="rule"></div>
+      By now I've accepted &middot; Jesus is Lord
+    </footer>
+  </main>
+</div>
+
+<script>
+(function() {
+  var toggle = document.getElementById('menuToggle');
+  var nav = document.getElementById('mobileNav');
+  var overlay = document.getElementById('mobileNavOverlay');
+  var closeBtn = document.getElementById('mobileNavClose');
+  if (!toggle || !nav || !overlay || !closeBtn) return;
+
+  function openNav() {
+    nav.classList.add('open');
+    overlay.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    nav.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('nav-open');
+  }
+  function closeNav(returnFocus) {
+    nav.classList.remove('open');
+    overlay.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    nav.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('nav-open');
+    if (returnFocus) toggle.focus();
+  }
+  toggle.addEventListener('click', function() {
+    if (toggle.getAttribute('aria-expanded') === 'true') { closeNav(false); } else { openNav(); }
+  });
+  closeBtn.addEventListener('click', function() { closeNav(true); });
+  overlay.addEventListener('click', function() { closeNav(false); });
+  nav.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') closeNav(false);
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') closeNav(true);
+  });
+})();
+
+(function() {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a, .mobile-nav a'));
+  if (!('IntersectionObserver' in window) || !links.length) return;
+  var map = {};
+  links.forEach(function(a) {
+    var id = a.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!map[id]) map[id] = [];
+    map[id].push(a);
+  });
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var group = map[entry.target.id];
+      if (!group) return;
+      if (entry.isIntersecting) {
+        links.forEach(function(l) { l.classList.remove('active'); });
+        group.forEach(function(l) { l.classList.add('active'); });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  Object.keys(map).forEach(function(id) { obs.observe(document.getElementById(id)); });
+})();
+</script>
+</body>
+</html>
